@@ -1,10 +1,16 @@
+/*
+Date : 05.03.2021
+Groupe : PRSV
+Description : Implémentation ccmd New
+ */
+
 import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "new",
         description = "créer un nouveau truc"
 )
-public class NewCmd implements Runnable{
+public class New implements Runnable{
 
     @CommandLine.Parameters(paramLabel = "<nom>", description = "nom du truc à créer")
     private String nom;

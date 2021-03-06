@@ -10,7 +10,7 @@ import picocli.CommandLine;
         version = "v. lab02 GEN",
         description = "Interdum et malesuada fames ac ante ipsum primis in faucibus. ",
         mixinStandardHelpOptions = true,
-        subcommands={NewCmd.class}
+        subcommands={New.class}
 )
 public class Main implements Runnable {
     public static void main(String[] args ){
