@@ -1,8 +1,8 @@
 import picocli.CommandLine;
 
-class HelloWorldCommand implements Runnable {
+class clean implements Runnable {
     public static void main(String[] args) {
-        CommandLine.run(new HelloWorldCommand(), args);
+        CommandLine.run(new clean(), args);
         }
 
         @Override
