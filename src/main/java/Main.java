@@ -6,9 +6,9 @@ Groupe : PRSV
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        name="lab02",
-        version = "v. lab02 GEN",
-        description = "Interdum et malesuada fames ac ante ipsum primis in faucibus. ",
+        name="statique",
+        version = "v0.0.1",
+        description = "Générateur de site statique développé dans le cadre du cours GEN ",
         mixinStandardHelpOptions = true,
         subcommands={New.class, Serve.class, Build.class, Clean.class}
 )
