@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 
+public class Utils {
 
-public class CreateFile {
-
-    public static void main(String txt, String name) {
+    public static void createFile(String txt, String name) {
         try {
             File myObj = new File(name);
             System.out.println("File created: " + myObj.getName());
