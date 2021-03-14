@@ -4,7 +4,7 @@ import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Application
+public class Write
 {
     @SuppressWarnings("unchecked")
     public static void main( String[] args )
