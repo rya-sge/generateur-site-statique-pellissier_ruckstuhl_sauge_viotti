@@ -12,7 +12,7 @@ public class JSONConfig {
     private String domain, name; // attributs du fichier de config
     private final String path;
 
-    JSONConfig(String path){
+    public JSONConfig(String path){
         this.path = path;
     }
 
