@@ -10,7 +10,7 @@ import java.io.IOException;
 public class JSONConfig {
 
     private String domain, name; // attributs du fichier de config
-    private String path;
+    private final String path;
 
     JSONConfig(String path){
         this.path = path;
