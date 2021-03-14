@@ -1,3 +1,5 @@
+import utils.WriteJSON;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WriteJSONTest {
