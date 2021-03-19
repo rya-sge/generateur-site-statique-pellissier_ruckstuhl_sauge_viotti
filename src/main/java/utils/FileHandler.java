@@ -1,18 +1,16 @@
 package utils;
 
-import org.json.simple.JSONObject;
 
 import java.io.*;
 
 public class FileHandler {
 
-
-
     public static String readFile(String path) {
         StringBuilder content = new StringBuilder();
 
-        try (FileReader reader = new FileReader(path)) {
+        try{
 
+            FileReader reader = new FileReader(path);
             while(true){
                 int charCode = reader.read();
 
@@ -20,7 +18,7 @@ public class FileHandler {
                     break;
                 }
 
-                content.append(charCode);
+                content.append((char)charCode);
             }
 
         } catch (Exception e) {
@@ -33,11 +31,12 @@ public class FileHandler {
 
 
     public static boolean write(String path, String data){
-        try (FileWriter writer = new FileWriter(path)){
+        try {
+            FileWriter writer = new FileWriter(path);
             writer.write(data);
-            writer.flush();
+            writer.close();
         }
-        catch (IOException e) {
+        catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -45,20 +44,37 @@ public class FileHandler {
         return true;
     }
 
+    public static boolean createFile(String path) {
 
+        return createFile(path, "");
+    }
 
-
-    public static void createFile(String txt, String name) {
+    public static boolean createFile(String path, String data) {
         try {
-            File myObj = new File(name);
-            System.out.println("File created: " + myObj.getName());
-            OutputStreamWriter writer = new OutputStreamWriter( new FileOutputStream(myObj), "UTF-8" );
-            writer.write(txt);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            File file = new File(path);
+            file.mkdirs();
+            file.createNewFile();
+
+            if(! data.isEmpty()){
+                write(path, data);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean exists(String path){
+        try {
+            File f = new File(path);
+            return f.exists();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return true;
         }
     }
 }
