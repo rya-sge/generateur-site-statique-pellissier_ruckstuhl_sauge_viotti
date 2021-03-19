@@ -6,9 +6,8 @@ Description : Implémentation cmd Init
 
 import picocli.CommandLine;
 import utils.Contenu;
-import utils.Utils;
+import utils.FileHandler;
 
-import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +36,7 @@ public class Init implements Callable<Integer> {
         c.add("## Page d'acceuil");
         c.add("### Votre contenu");
         Contenu contenu = new Contenu(titre, "", date, c);
-        Utils.createFile(contenu.toString(), name);
+        FileHandler.createFile(contenu.toString(), name);
         return 1;
     }
 

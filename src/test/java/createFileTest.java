@@ -1,10 +1,10 @@
 import org.junit.jupiter.api.Test;
-import utils.Utils;
+import utils.FileHandler;
 
 class createFileTest {
     @Test
     void name() {
         String file ="index.txt";
-        Utils.createFile("Le fichier a été crée", file);
+        FileHandler.createFile("Le fichier a été crée", file);
     }
 }
