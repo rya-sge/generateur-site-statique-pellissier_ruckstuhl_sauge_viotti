@@ -36,7 +36,7 @@ public class Utils {
         try {
             BufferedReader  reader = new BufferedReader(new InputStreamReader( new FileInputStream(file), "UTF-8" ));
             try{
-                String b = null;
+                String b;
                 StringBuilder builder = new StringBuilder();
                 while((b = reader.readLine()) != null){
                     builder.append(b + '\n');
