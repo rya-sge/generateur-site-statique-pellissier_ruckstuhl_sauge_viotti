@@ -21,8 +21,9 @@ class FileHandlerTest {
         String testString = "Pack my box with five dozen liquor jugs.";
         String filename = testFilesPath+"liquor.txt";
 
-        assertTrue(FileHandler.createFile(testString, filename));
+        assertTrue(FileHandler.create(filename, testString));
         assertTrue(FileHandler.exists(filename));
+        assertEquals(FileHandler.readFile(filename), testString);
     }
 
     @org.junit.jupiter.api.Test
@@ -32,7 +33,7 @@ class FileHandlerTest {
 
         String filename = testFilesPath+"fox.txt";
 
-        assertTrue(FileHandler.createFile(filename, testString));
+        assertTrue(FileHandler.create(filename, testString));
         assertTrue(FileHandler.exists(filename));
         assertEquals(FileHandler.readFile(filename), testString);
     }
@@ -42,7 +43,7 @@ class FileHandlerTest {
 
         String filename = testFilesPath+"dir/test.txt";
 
-        assertTrue(FileHandler.createFile(filename));
+        assertTrue(FileHandler.create(filename));
 
         assertTrue(FileHandler.exists(filename));
 

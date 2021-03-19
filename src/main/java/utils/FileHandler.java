@@ -44,15 +44,17 @@ public class FileHandler {
         return true;
     }
 
-    public static boolean createFile(String path) {
+    public static boolean create(String path) {
 
-        return createFile(path, "");
+        return create(path, "");
     }
 
-    public static boolean createFile(String path, String data) {
+    public static boolean create(String path, String data) {
         try {
+
             File file = new File(path);
-            file.mkdirs();
+            File dir = new File(file.getParent());
+            dir.mkdirs();
             file.createNewFile();
 
             if(! data.isEmpty()){
@@ -70,11 +72,12 @@ public class FileHandler {
     public static boolean exists(String path){
         try {
             File f = new File(path);
+            System.out.printf("\n-----------\n %s existe ? %s", path, (f.exists() ? "true" : "false"));
             return f.exists();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return true;
+            return false;
         }
     }
 }
