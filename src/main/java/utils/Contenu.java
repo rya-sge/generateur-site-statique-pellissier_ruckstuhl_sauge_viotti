@@ -21,7 +21,7 @@ public class Contenu {
             this.auteur = "auteur : " + auteur + '\n';
         }
         if (!date.isEmpty()) {
-            this.date = "date:" + date + '\n';
+            this.date = "date : " + date + '\n';
         }
 
         this.contenu = contenu;
