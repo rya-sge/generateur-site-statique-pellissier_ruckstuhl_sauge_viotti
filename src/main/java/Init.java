@@ -8,7 +8,7 @@ import picocli.CommandLine;
 import utils.Contenu;
 import utils.Utils;
 
-import java.io.*;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,13 +21,16 @@ public class Init implements Callable<Integer> {
     //@CommandLine.Option(names = {"-u", "--user"}, description = "User name")
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
     private String rootDirectory;
-    /**
-     * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
-     */
-    @Override
-    public Integer call() {
-        System.out.println("Initialisation du site static");
-        String name = "index.md";
+
+    public String getIndex() {
+        return index.toString();
+    }
+
+    private Contenu index;
+    private String name = "index.md";
+
+    Init(){
+
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         String titre = "Mon premier article";
@@ -36,9 +39,18 @@ public class Init implements Callable<Integer> {
         c.add("# Bienvenue vers le meilleur generateur");
         c.add("## Page d'acceuil");
         c.add("### Votre contenu");
-        Contenu contenu = new Contenu(titre, "", date, c);
-        Utils.createFile(contenu.toString(), name);
-        return 1;
+        index = new Contenu(titre, "", date, c);
+    }
+    /**
+     * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
+     */
+    @Override
+    public Integer call() {
+        System.out.println("Initialisation du site static");
+        File root = new File(rootDirectory);
+        root.mkdirs();
+        Utils.createFile(getIndex().toString(), root + "/" + name);
+        return 1; //Nombre de fichier créee
     }
 
 }
