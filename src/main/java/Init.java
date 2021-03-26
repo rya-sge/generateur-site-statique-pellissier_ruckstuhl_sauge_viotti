@@ -7,6 +7,7 @@ Description : Implémentation cmd Init
 import picocli.CommandLine;
 import utils.Contenu;
 import utils.FileHandler;
+import utils.JSONConfig;
 //import utils.Utils;
 
 import java.io.File;
@@ -14,7 +15,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
+
 
 import static utils.FileHandler.exists;
 
@@ -29,11 +32,21 @@ public class Init implements Callable<Integer> {
     }
 
     private Contenu index;
-    private String name = "index.md";
+
+    //Nom
+    private String indexFileName = "index.md";
     private String configFileName = "config.json";
-    private static boolean createIndex = false;
-    private static boolean createRootDirectory = false;
-    private static boolean createFileConfig= false;
+
+    //Path
+    private String pathIndex = rootDirectory + '/' + indexFileName;
+    private String pathFileConfig = rootDirectory + '/' + configFileName;
+
+    //Booléean indiquant si un fichir existe ou pas
+    public static boolean createIndex = false;
+    public static boolean createRootDirectory = false;
+    public static boolean createFileConfig= false;
+
+
     Init(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -45,6 +58,7 @@ public class Init implements Callable<Integer> {
         c.add("### Votre contenu");
         index = new Contenu(titre, "", date, c);
     }
+
     /**
      * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
      */
@@ -65,19 +79,35 @@ public class Init implements Callable<Integer> {
         }
 
         //config.json
-        if( exists(cheminIndex)){
-            System.out.println("index.md existe déjà");
+        if( exists(pathFileConfig)){
+            System.out.println("Le fichier de config existe déjà");
         }else{
+            String titre = "", description = "", domaine = "";
+            JSONConfig config = new JSONConfig(pathFileConfig);
+            config.config(titre, domaine, description);
             createIndex = true;
-            FileHandler.create(cheminIndex, getIndex().toString() );
+            FileHandler.create(pathFileConfig, getIndex().toString() );
+           /* System.out.println("Le fichier de configuration doit créer :");
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Veuillez saisir un titre:");
+            String titre = sc.nextLine();
+
+            System.out.println("Veuillez saisir une description:");
+            String description = sc.nextLine();
+
+            System.out.println("Veuillez saisir un domaine:");
+            String domaine = sc.nextLine();
+            FileHandler.create(pathFileConfig, getIndex().toString() );
+            */
         }
 
-        String cheminIndex = rootDirectory + "/" + name;
-        if( exists(cheminIndex)){
+        //index.md
+        if( exists(pathIndex)){
             System.out.println("index.md existe déjà");
 
         }else{
-            FileHandler.create(cheminIndex, getIndex().toString() );
+            FileHandler.create(pathIndex, getIndex().toString() );
             createFileConfig = true;
             ++nombreFichierCree;
 

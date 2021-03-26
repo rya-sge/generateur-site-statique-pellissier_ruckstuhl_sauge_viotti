@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class JSONConfig {
 
-    private String domain, name; // attributs du fichier de config
+    private String domaine, titre, description; // attributs du fichier de config
     private final String path;
 
     public JSONConfig(String path){
@@ -34,11 +34,11 @@ public class JSONConfig {
         return true;
     }
 
-    private JSONObject toJSON(String siteName, String domain){
+    private JSONObject toJSON(String titre, String domaine, String description){
         JSONObject object = new JSONObject();
-        object.put("name", siteName);
-        object.put("domain", domain);
-
+        object.put("titre", titre);
+        object.put("domaine", domaine);
+        object.put("description", description);
         return object;
     }
 
@@ -53,12 +53,16 @@ public class JSONConfig {
             JSONObject jsonObject = (JSONObject) obj;
 
             //Récupère le nom du site
-            String name = (String) jsonObject.get("name");
-            this.name = name;
+            String name = (String) jsonObject.get("titre");
+            this.titre = name;
 
             //Récupère le nom de domaine du site
-            String domain = (String) jsonObject.get("domain");
-            this.domain = domain;
+            String domaine = (String) jsonObject.get("domaine");
+            this.domaine = domaine;
+
+            //Récupère la description du site
+            String description = (String) jsonObject.get("description");
+            this.description = description;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -70,26 +74,29 @@ public class JSONConfig {
 
     public boolean write(){
 
-        JSONObject object = toJSON(name, domain);
+        JSONObject object = toJSON(titre, domaine, description);
 
         return this.write(object.toJSONString());
 
     }
 
-    public void config(String siteName, String domain){
-        this.name = siteName;
-        this.domain = domain;
+    public void config(String titre, String domaine, String description){
+        this.titre = titre;
+        this.domaine = domaine;
     }
 
 
     /* Getters */
 
-    public String getDomain() {
-        return domain;
+    public String getDomaine() {
+        return domaine;
     }
 
-    public String getName() {
-        return name;
+    public String getTitre() {
+        return titre;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }
