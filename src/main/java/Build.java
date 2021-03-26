@@ -25,24 +25,18 @@ public class Build implements Callable<Integer> {
     public Integer call() throws IOException, ParseException {
         //Lecture du fichier md pour connaitre le site et le nom de domaine
 
-        try {
-
-            Path path = Paths.get(rootDirectory+"build");
-
-            //java.nio.file.Files;
-            Files.createDirectories(path);
-
-        } catch (IOException e) {
-
-            System.err.println("Failed to create directory : " + e.getMessage());
-        }
 
         //Copie le contenu du dossier UNIQUEMENT dans le dosser build
         String source = rootDirectory;
         File srcDir = new File(source);
 
-        String destination = rootDirectory+"build/";
+        String destination = rootDirectory+"/build/";
         File destDir = new File(destination);
+
+        if(destDir.exists())
+        {
+            FileUtils.forceDelete(destDir);
+        }
 
         try {
             FileUtils.copyDirectory(srcDir, destDir, true);
@@ -51,7 +45,7 @@ public class Build implements Callable<Integer> {
         }
 
         //Transforme les fichiers présent dans le dossier build
-        File folder = new File(rootDirectory+"build/");
+        File folder = new File(rootDirectory+"/build/");
         File[] listofFiles = folder.listFiles();
         for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
         {
@@ -61,15 +55,17 @@ public class Build implements Callable<Integer> {
                 int index = filename.lastIndexOf('.');
                 if(index > 0) {
                     String extension = filename.substring(index + 1);
-                    if(extension=="md") //Si le fichier est sous format md, il est convertit en html
+                    if(extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
                     {
-                        Reader in = new FileReader(file.toPath().toString());
-                        filename.replace("md","html");
-                        Writer out = new FileWriter(file.toPath().toString());
+                        Reader in = new FileReader(file);
+                        filename = file.getPath();
+                        filename = filename.replace("md","html");
+                        Writer out = new FileWriter(filename);
                         Markdown md = new Markdown();
                         md.transform(in, out);
+                        file.delete();
                     }
-                    else if(file.getName() == "config.yaml") //On elimine le fichier de config
+                    else if(file.getName().equals("config.yaml")) //On elimine le fichier de config
                     {
                         file.delete(); //
                     }
