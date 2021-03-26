@@ -98,6 +98,7 @@
         </configuration>
       </plugin>
       <plugin>
+        <!-- Génération du .jar avec les dépendances à l'intérieur -->
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
@@ -106,6 +107,9 @@
               <goal>single</goal>
             </goals>
             <configuration>
+              <outputDirectory>${project.build.directory}/releases</outputDirectory>
+              <finalName>${project.name}-${project.version}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
               <archive>
                 <manifest>
                   <mainClass>Main</mainClass>
