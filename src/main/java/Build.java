@@ -11,6 +11,7 @@ import picocli.CommandLine;
 import java.io.*;
 import java.nio.file.*;
 import java.util.concurrent.Callable;
+import org.apache.commons.io.FileUtils;
 
 @CommandLine.Command(
         name = "Build",
@@ -36,7 +37,21 @@ public class Build implements Callable<Integer> {
             System.err.println("Failed to create directory : " + e.getMessage());
         }
 
-        File folder = new File(rootDirectory+"/Dossier/");
+        //Copie le contenu du dossier UNIQUEMENT dans le dosser build
+        String source = rootDirectory;
+        File srcDir = new File(source);
+
+        String destination = rootDirectory+"build/";
+        File destDir = new File(destination);
+
+        try {
+            FileUtils.copyDirectory(srcDir, destDir, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Transforme les fichiers présent dans le dossier build
+        File folder = new File(rootDirectory+"build/");
         File[] listofFiles = folder.listFiles();
         for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
         {
@@ -48,15 +63,15 @@ public class Build implements Callable<Integer> {
                     String extension = filename.substring(index + 1);
                     if(extension=="md") //Si le fichier est sous format md, il est convertit en html
                     {
-                        Reader in = new FileReader(rootDirectory+"/dossier/"+filename);
+                        Reader in = new FileReader(file.toPath().toString());
                         filename.replace("md","html");
-                        Writer out = new FileWriter(rootDirectory+"/build/dossier/"+ filename);
+                        Writer out = new FileWriter(file.toPath().toString());
                         Markdown md = new Markdown();
                         md.transform(in, out);
                     }
-                    else //Sinon copie le fichier sans l'altérer
+                    else if(file.getName() == "config.yaml") //On elimine le fichier de config
                     {
-                        Files.copy(file.toPath(),(new File(rootDirectory+"/build/dossier" + file.getName())).toPath());
+                        file.delete(); //
                     }
                 }
             }
