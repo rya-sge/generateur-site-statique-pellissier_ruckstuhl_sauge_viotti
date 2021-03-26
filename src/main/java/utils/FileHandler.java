@@ -36,7 +36,7 @@ public class FileHandler {
 
 
     /**
-     * Ecrit des données dans un fichier. Attention
+     * Ecrit des données dans un fichier.
      * @param path le chemin vers le fichier
      * @param data les données à écrire
      * @return true si l'écriture s'est bien passée, sinon false
