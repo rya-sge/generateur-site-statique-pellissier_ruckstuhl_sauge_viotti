@@ -23,17 +23,20 @@ import static utils.FileHandler.exists;
 
 @CommandLine.Command(name = "init", description = "Initialiser un site static")
 public class Init implements Callable<Integer> {
-    //@CommandLine.Option(names = {"-u", "--user"}, description = "User name")
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
     private String rootDirectory;
 
+    /**
+     *
+     * @return
+     */
     public String getIndex() {
         return index.toString();
     }
 
     private Contenu index;
 
-    //Nom
+    //Nom des fichiers
     private String indexFileName = "index.md";
     private String configFileName = "config.json";
 
@@ -45,7 +48,7 @@ public class Init implements Callable<Integer> {
     public boolean createFileConfig = false;
 
 
-    Init(){
+    void createIndex(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         String titre = "Mon premier article";
@@ -59,62 +62,67 @@ public class Init implements Callable<Integer> {
 
     /**
      * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
+     * @return
      */
     @Override
     public Integer call() {
+        //Init
+        createIndex = false;
+        createRootDirectory = false;
+        createFileConfig = false;
+
         //Path
         String pathIndex = rootDirectory + '/' + indexFileName;
         String pathFileConfig = rootDirectory + '/' + configFileName;
         System.out.println("Initialisation du site static");
-        int nombreFichierCree = 2;
 
         //RootDirectory
         if(exists(rootDirectory)){
             System.out.println("Le dossier root existe déjà");
-            //--nombreFichierCree;
         }else{
             File root = new File(rootDirectory);
             root.mkdirs();
             System.out.println("Le dossier root a été créee");
-
             createRootDirectory = true;
         }
 
-        //config.json
+        //Fichier de configuration
         if( exists(pathFileConfig)){
             System.out.println("Le fichier de config existe déjà");
-            --nombreFichierCree;
         }else{
             JSONConfig config = new JSONConfig(pathFileConfig);
             System.out.println("Le fichier de configuration doit être crée :");
             Scanner sc = new Scanner(System.in);
 
+            //Titre
             System.out.println("Veuillez saisir un titre:");
             String titre = sc.nextLine();
 
+            //Domaine
             System.out.println("Veuillez saisir un domaine:");
             String domaine = sc.nextLine();
-            FileHandler.create(pathFileConfig, getIndex().toString() );
 
+            //Description
             System.out.println("Veuillez saisir une description:");
             String description = sc.nextLine();
 
-
+            //Ecriture du fichier
             config.config(titre, domaine, description);
             config.write();
             createFileConfig = true;
         }
 
-        //index.md
+        //Index du site
         if( exists(pathIndex)){
             System.out.println("index.md existe déjà");
-            --nombreFichierCree;
+
         }else{
+            createIndex();
             FileHandler.create(pathIndex, getIndex().toString() );
             createIndex = true;
         }
-        return nombreFichierCree; //Nombre de fichier créee
 
+        return 0;
     }
 
 }
