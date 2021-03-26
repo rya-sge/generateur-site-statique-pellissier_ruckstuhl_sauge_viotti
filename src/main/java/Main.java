@@ -2,12 +2,12 @@
 Date : 05.03.2021
 Groupe : PRSV
  */
-
 import picocli.CommandLine;
+import utils.Version;
 
 @CommandLine.Command(
         name="statique",
-        version = "v0.0.1",
+        versionProvider = Version.class,
         description = "Générateur de site statique développé dans le cadre du cours GEN ",
         mixinStandardHelpOptions = true,
         subcommands={New.class, Serve.class, Build.class, Clean.class, Init.class}
