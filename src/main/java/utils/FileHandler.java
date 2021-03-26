@@ -5,11 +5,16 @@ import java.io.*;
 
 public class FileHandler {
 
+    /**
+     * Lit un fichier
+     * @param path le chemin vers le fichier
+     * @return le contenu sous forme de String
+     */
     public static String readFile(String path) {
         StringBuilder content = new StringBuilder();
 
         try{
-
+            // Lit le contenu du fichier
             FileReader reader = new FileReader(path);
             while(true){
                 int charCode = reader.read();
@@ -30,6 +35,12 @@ public class FileHandler {
     }
 
 
+    /**
+     * Ecrit des données dans un fichier.
+     * @param path le chemin vers le fichier
+     * @param data les données à écrire
+     * @return true si l'écriture s'est bien passée, sinon false
+     */
     public static boolean write(String path, String data){
         try {
             FileWriter writer = new FileWriter(path);
@@ -44,19 +55,38 @@ public class FileHandler {
         return true;
     }
 
+    /**
+     * Crée un fichier vide
+     * @param path chemin vers le fichier
+     * @return true si la création s'est bien passée
+     */
     public static boolean create(String path) {
 
         return create(path, "");
     }
 
+    /**
+     * Créer un fichier avec le contenu passé en paramètre
+     * @param path chemin du fichier
+     * @param data données à écrire dans le fichier
+     * @return true si la création s'est bien passée
+     */
     public static boolean create(String path, String data) {
         try {
 
             File file = new File(path);
-            File dir = new File(file.getParent());
-            dir.mkdirs();
-            file.createNewFile();
 
+            // Crée les répertoires parents s'ils n'existent pas encore
+            File dir = new File(file.getParent());
+            if(dir.mkdirs()){
+                throw new Exception("Erreur de création des dossiers parents");
+            }
+
+            if(file.createNewFile()){
+                throw new Exception("Erreur de création du fichier");
+            }
+
+            // S'il y a du contenu à écrire
             if(! data.isEmpty()){
                 write(path, data);
             }
@@ -69,10 +99,14 @@ public class FileHandler {
         return true;
     }
 
+    /**
+     * Contrôle si le fichier passé en paramètre existe
+     * @param path le chemin à vérifier
+     * @return true ou false
+     */
     public static boolean exists(String path){
         try {
             File f = new File(path);
-            System.out.printf("\n-----------\n %s existe ? %s", path, (f.exists() ? "true" : "false"));
             return f.exists();
         }
         catch (Exception e){
