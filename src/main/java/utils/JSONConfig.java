@@ -83,6 +83,7 @@ public class JSONConfig {
     public void config(String titre, String domaine, String description){
         this.titre = titre;
         this.domaine = domaine;
+        this.description = description;
     }
 
 

@@ -37,14 +37,12 @@ public class Init implements Callable<Integer> {
     private String indexFileName = "index.md";
     private String configFileName = "config.json";
 
-    //Path
-    private String pathIndex = rootDirectory + '/' + indexFileName;
-    private String pathFileConfig = rootDirectory + '/' + configFileName;
+
 
     //Booléean indiquant si un fichir existe ou pas
-    public static boolean createIndex = false;
-    public static boolean createRootDirectory = false;
-    public static boolean createFileConfig= false;
+    public boolean createIndex = false;
+    public boolean createRootDirectory = false;
+    public boolean createFileConfig = false;
 
 
     Init(){
@@ -64,56 +62,57 @@ public class Init implements Callable<Integer> {
      */
     @Override
     public Integer call() {
+        //Path
+        String pathIndex = rootDirectory + '/' + indexFileName;
+        String pathFileConfig = rootDirectory + '/' + configFileName;
         System.out.println("Initialisation du site static");
-        int nombreFichierCree = 0;
+        int nombreFichierCree = 2;
 
         //RootDirectory
         if(exists(rootDirectory)){
             System.out.println("Le dossier root existe déjà");
+            //--nombreFichierCree;
         }else{
             File root = new File(rootDirectory);
             root.mkdirs();
             System.out.println("Le dossier root a été créee");
-            ++nombreFichierCree;
+
             createRootDirectory = true;
         }
 
         //config.json
         if( exists(pathFileConfig)){
             System.out.println("Le fichier de config existe déjà");
+            --nombreFichierCree;
         }else{
-            String titre = "", description = "", domaine = "";
             JSONConfig config = new JSONConfig(pathFileConfig);
-            config.config(titre, domaine, description);
-            createIndex = true;
-            FileHandler.create(pathFileConfig, getIndex().toString() );
-           /* System.out.println("Le fichier de configuration doit créer :");
+            System.out.println("Le fichier de configuration doit être crée :");
             Scanner sc = new Scanner(System.in);
 
             System.out.println("Veuillez saisir un titre:");
             String titre = sc.nextLine();
 
-            System.out.println("Veuillez saisir une description:");
-            String description = sc.nextLine();
-
             System.out.println("Veuillez saisir un domaine:");
             String domaine = sc.nextLine();
             FileHandler.create(pathFileConfig, getIndex().toString() );
-            */
+
+            System.out.println("Veuillez saisir une description:");
+            String description = sc.nextLine();
+
+
+            config.config(titre, domaine, description);
+            config.write();
+            createFileConfig = true;
         }
 
         //index.md
         if( exists(pathIndex)){
             System.out.println("index.md existe déjà");
-
+            --nombreFichierCree;
         }else{
             FileHandler.create(pathIndex, getIndex().toString() );
-            createFileConfig = true;
-            ++nombreFichierCree;
-
+            createIndex = true;
         }
-
-
         return nombreFichierCree; //Nombre de fichier créee
 
     }
