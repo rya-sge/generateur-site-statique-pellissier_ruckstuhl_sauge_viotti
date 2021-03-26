@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 
+
 @CommandLine.Command(name = "init", description = "Initialiser un site static")
 public class Init implements Callable<Integer> {
     //@CommandLine.Option(names = {"-u", "--user"}, description = "User name")
@@ -53,3 +54,5 @@ public class Init implements Callable<Integer> {
     }
 
 }
+
+
