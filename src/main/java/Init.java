@@ -30,7 +30,10 @@ public class Init implements Callable<Integer> {
 
     private Contenu index;
     private String name = "index.md";
-
+    private String configFileName = "config.json";
+    private static boolean createIndex = false;
+    private static boolean createRootDirectory = false;
+    private static boolean createFileConfig= false;
     Init(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -48,24 +51,40 @@ public class Init implements Callable<Integer> {
     @Override
     public Integer call() {
         System.out.println("Initialisation du site static");
-        if( exists(rootDirectory)){
+        int nombreFichierCree = 0;
+
+        //RootDirectory
+        if(exists(rootDirectory)){
             System.out.println("Le dossier root existe déjà");
         }else{
             File root = new File(rootDirectory);
             root.mkdirs();
             System.out.println("Le dossier root a été créee");
+            ++nombreFichierCree;
+            createRootDirectory = true;
         }
-        if( exists(rootDirectory)){
-            System.out.println("Le dossier root existe déjà");
+
+        //config.json
+        if( exists(cheminIndex)){
+            System.out.println("index.md existe déjà");
+        }else{
+            createIndex = true;
+            FileHandler.create(cheminIndex, getIndex().toString() );
         }
+
         String cheminIndex = rootDirectory + "/" + name;
         if( exists(cheminIndex)){
             System.out.println("index.md existe déjà");
-            return 0;
+
         }else{
             FileHandler.create(cheminIndex, getIndex().toString() );
-            return 1; //Nombre de fichier créee
+            createFileConfig = true;
+            ++nombreFichierCree;
+
         }
+
+
+        return nombreFichierCree; //Nombre de fichier créee
 
     }
 
