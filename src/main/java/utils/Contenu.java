@@ -23,7 +23,6 @@ public class Contenu {
         if (!date.isEmpty()) {
             this.date = "date : " + date + '\n';
         }
-
         this.contenu = contenu;
     }
 

@@ -79,11 +79,11 @@ public class FileHandler {
             // Crée les répertoires parents s'ils n'existent pas encore
             File dir = new File(file.getParent());
             if(dir.mkdirs()){
-                throw new Exception("Erreur de création des dossiers parents");
+                //throw new Exception("Erreur de création des dossiers parents");
             }
 
             if(file.createNewFile()){
-                throw new Exception("Erreur de création du fichier");
+               // throw new Exception("Erreur de création du fichier");
             }
 
             // S'il y a du contenu à écrire
@@ -119,7 +119,7 @@ public class FileHandler {
      * Efface un dossier et son contenu.
      * @param directory le dossier à effacer.
      */
-    public void eraseNotEmptyDirectory(File directory){
+    public static void eraseNotEmptyDirectory(File directory){
         File[] lFiles = directory.listFiles();
         if (lFiles != null){
             for (File file: lFiles){
