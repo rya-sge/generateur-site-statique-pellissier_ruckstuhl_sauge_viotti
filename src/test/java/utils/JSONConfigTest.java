@@ -1,8 +1,5 @@
 package utils;
 
-import utils.JSONConfig;
-
-//import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONConfigTest {
@@ -13,13 +10,13 @@ class JSONConfigTest {
 
         JSONConfig config = new JSONConfig(path);
 
-        String name = "Test Site";
-        String domain = "test.com";
+        String titre = "My Little Pony";
+        String domaine = "BestPonyEver.com";
+        String description = "Friendschip is Magic";
+        config.config(titre, domaine, description);
 
-        config.config(name, domain);
-
-        assertEquals(name, config.getName());
-        assertEquals(domain, config.getDomain());
+        assertEquals(titre, config.getTitre());
+        assertEquals(domaine, config.getDomaine());
 
         // écriture du fichier
         assertTrue(config.write());
@@ -28,8 +25,8 @@ class JSONConfigTest {
         assertTrue(config.read());
 
         // les attributs ne doivent pas être différents
-        assertEquals(name, config.getName());
-        assertEquals(domain, config.getDomain());
+        assertEquals(titre, config.getTitre());
+        assertEquals(domaine, config.getDomaine());
 
 
     }
