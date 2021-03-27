@@ -1,3 +1,8 @@
+/*
+Date : 14.03.2021
+Groupe : PRSV
+Description : Représente le contenu d'une page sur le site
+ */
 package utils;
 
 import java.util.Iterator;
@@ -34,9 +39,11 @@ public class Contenu {
         builder.append(titre);
         builder.append(auteur);
         builder.append(date);
-        Iterator it = contenu.iterator();
-        while (it.hasNext()) {
-            builder.append((String) (it.next()) + '\n');
+        if(contenu != null){
+            Iterator it = contenu.iterator();
+            while (it.hasNext()) {
+                builder.append((String) (it.next()) + '\n');
+            }
         }
         return builder.toString();
     }
