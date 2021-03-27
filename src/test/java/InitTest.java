@@ -16,9 +16,8 @@ import java.io.File;
 import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.Utils.readFile;
 import static utils.FileHandler.eraseNotEmptyDirectory;
-
+import static utils.FileHandler.readFile;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
 
@@ -57,7 +56,7 @@ class InitTest {
         assertEquals(listFile.length, 2);//config et index
 
         //Vérifier le contenu du fichier index.md
-        assertEquals(readFile(new File(rootDirectory + '/' + "index.md")), i.getIndex());
+        assertEquals(readFile(rootDirectory + '/' + "index.md"), i.getIndex());
     }
 
     @Test
