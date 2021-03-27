@@ -13,7 +13,7 @@ import java.io.File;
         description = "nettoie le site statique"
 )
 
-class Clean implements Runnable {
+class Clean implements C {
 
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root du site à effacer")
     private String rootDirectory;
@@ -37,7 +37,7 @@ class Clean implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run() throws RuntimeException{
 
         boolean buildNotFound = true;
         File root = new File(rootDirectory);
@@ -46,15 +46,14 @@ class Clean implements Runnable {
             for (File file: lFiles){
                 if (file.isDirectory() && file.getName().equals("build")){
                     eraseNotEmptyDirectory(file);
-                    System.out.println("build directory deleted");
                     buildNotFound = false;
                 }
             }
             if (buildNotFound){
-                System.out.println("directory build not found");
+                throw new  RuntimeException("Dossier build non trouvé");
             }
         }else{
-            System.out.println("Dossier vide");
+            throw new  RuntimeException("Dossier vide");
         }
     }
 }
