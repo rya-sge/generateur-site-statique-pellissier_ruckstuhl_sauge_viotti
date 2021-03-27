@@ -6,19 +6,55 @@ Description : Implémentation cmd Clean
 
 import picocli.CommandLine;
 
+import java.io.File;
+
 @CommandLine.Command(
-        name = "Clean",
-        description = "clean un truc"
+        name = "clean",
+        description = "nettoie le site statique"
 )
 
 class Clean implements Runnable {
-    public static void main(String[] args) {
-        CommandLine.run(new Clean(), args);
-        }
 
-        @Override
-        public void run() {
-            System.out.println("Hello World!");
+    @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root du site à effacer")
+    private String rootDirectory;
+
+    /**
+     * Efface un dossier et son contenu.
+     * @param directory le dossier à effacer.
+     */
+    public void eraseNotEmptyDirectory(File directory){
+        File[] lFiles = directory.listFiles();
+        if (lFiles != null){
+            for (File file: lFiles){
+                if (file.isDirectory()){
+                    eraseNotEmptyDirectory(file);
+                }else {
+                    file.delete();
+                }
+            }
         }
+        directory.delete();
+    }
+
+    @Override
+    public void run() {
+
+        boolean buildNotFound = true;
+        File root = new File(rootDirectory);
+        File[] lFiles = root.listFiles();
+        if(lFiles != null){
+            for (File file: lFiles){
+                if (file.isDirectory() && file.getName().equals("build")){
+                    eraseNotEmptyDirectory(file);
+                    System.out.println("build directory deleted");
+                    buildNotFound = false;
+                }
+            }
+            if (buildNotFound){
+                System.out.println("directory build not found");
+            }
+        }else{
+            System.out.println("Dossier vide");
+        }
+    }
 }
-
