@@ -12,9 +12,9 @@ import utils.Version;
         mixinStandardHelpOptions = true,
         subcommands={New.class, Serve.class, Build.class, Clean.class, Init.class}
 )
-public class Main implements Runnable {
+public class Statique implements Runnable {
     public static void main(String[] args ){
-        int exitCode = new CommandLine(new Main()).execute(args);
+        int exitCode = new CommandLine(new Statique()).execute(args);
         System.exit(exitCode);
     }
 
