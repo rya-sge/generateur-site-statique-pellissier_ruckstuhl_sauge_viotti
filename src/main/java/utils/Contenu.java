@@ -1,3 +1,8 @@
+/*
+Date : 14.03.2021
+Groupe : PRSV
+Description : Représente le contenu d'une page sur le site
+ */
 package utils;
 
 import java.util.Iterator;
