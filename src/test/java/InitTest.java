@@ -20,8 +20,8 @@ import static utils.FileHandler.eraseNotEmptyDirectory;
 import static utils.FileHandler.readFile;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
-
-    final private String rootDirectory = "root";
+    private final String testFilesPath =  "src/test/java/utils/testfiles/";
+    final private String rootDirectory = testFilesPath  + "root";
     final String titre = "My Poney Back";
     final String domaine = "Sparkle.com";
     final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
