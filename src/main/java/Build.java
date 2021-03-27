@@ -26,7 +26,7 @@ public class Build implements Callable<Integer> {
         //Lecture du fichier md pour connaitre le site et le nom de domaine
 
 
-        //Copie le contenu du dossier UNIQUEMENT dans le dosser build
+        //Copie le contenu du dossier UNIQUEMENT, dans le dosser build
         String source = rootDirectory;
         File srcDir = new File(source);
 
@@ -44,7 +44,7 @@ public class Build implements Callable<Integer> {
             e.printStackTrace();
         }
 
-        //Transforme les fichiers présent dans le dossier build
+        //Copie intégrale des fichiers présent dans build, puis conversion et clean du dossier
         File folder = new File(rootDirectory+"/build/");
         File[] listofFiles = folder.listFiles();
         for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
@@ -58,11 +58,14 @@ public class Build implements Callable<Integer> {
                     if(extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
                     {
                         Reader in = new FileReader(file);
+
                         filename = file.getPath();
                         filename = filename.replace("md","html");
+
                         Writer out = new FileWriter(filename);
                         Markdown md = new Markdown();
                         md.transform(in, out);
+
                         out.close();
                         file.delete();
                     }
@@ -74,7 +77,7 @@ public class Build implements Callable<Integer> {
             }
 
         }
-        return 0;
+        return 1;
     }
 
 }

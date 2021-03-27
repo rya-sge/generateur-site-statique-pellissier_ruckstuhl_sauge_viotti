@@ -1,10 +1,13 @@
+/*
+Date : 27.03.2021
+Groupe : PRSV
+Description : Test cmd Build
+ */
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-
 import java.io.File;
 import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
