@@ -1,6 +1,10 @@
+/*
+Date : 26.03.2021
+Groupe : PRSV
+Description : class de traitements de fichiers
+ */
+
 package utils;
-
-
 import java.io.*;
 
 public class FileHandler {

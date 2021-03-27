@@ -1,3 +1,9 @@
+/*
+Date : 14.03.2021
+Groupe : PRSV
+Description : class pour le fichier de configuration json
+ */
+
 package utils;
 
 import org.json.simple.JSONObject;
