@@ -24,13 +24,13 @@ public class BuildTest {
         //Création des dossiers root, résultat final ciblé
         FileUtils.forceMkdir(dir);
 
-        File config = new File(dir+"/config.yaml");
+        File config = new File(dir + "/" + Constantes.CONFIG_FILE_NAME);
         config.createNewFile();
 
-        File index = new File(dir+"/index.md");
+        File index = new File(dir + "/" + Constantes.INDEX_FILE_NAME);
         index.createNewFile();
 
-        File indexHtml = new File(dir+"/build/");
+        File indexHtml = new File(dir + "/build/");
         indexHtml.mkdir();
         indexHtml = new File("BuildTest/build/index.html");
         indexHtml.createNewFile();
@@ -44,10 +44,10 @@ public class BuildTest {
 
         //Création des dossiers sur lesquels seront lancé la commande Build
         FileUtils.forceMkdir(dir2);
-        File config2 = new File(dir2+"/config.yaml");
+        File config2 = new File(dir2 + "/" + Constantes.CONFIG_FILE_NAME);
         config2.createNewFile();
 
-        File index2 = new File(dir2+"/index.md");
+        File index2 = new File(dir2 + "/" + Constantes.INDEX_FILE_NAME);
         index2.createNewFile();
 
         String argsBuild = "BuildTest2";

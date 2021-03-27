@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import picocli.CommandLine;
 import utils.JSONConfig;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -56,7 +55,7 @@ class InitTest {
         assertEquals(listFile.length, 2);//config et index
 
         //Vérifier le contenu du fichier index.md
-        assertEquals(readFile(rootDirectory + '/' + "index.md"), i.getIndex());
+        assertEquals(readFile(rootDirectory + '/' + Constantes.INDEX_FILE_NAME), i.getIndex());
     }
 
     @Test
@@ -66,7 +65,7 @@ class InitTest {
      */
     void testFileConfig() {
         //Vérification contenu json
-        String path = rootDirectory + "/config.json";
+        String path = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
 
         JSONConfig config = new JSONConfig(path);
 

@@ -34,11 +34,6 @@ public class Init implements Callable<Integer> {
 
     private Contenu index;
 
-    //Nom des fichiers
-    private String indexFileName = "index.md";
-    private String configFileName = "config.json";
-
-
     //Booléean indiquant si un fichir existe ou pas
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
@@ -71,8 +66,8 @@ public class Init implements Callable<Integer> {
         createFileConfig = false;
 
         //Path
-        String pathIndex = rootDirectory + '/' + indexFileName;
-        String pathFileConfig = rootDirectory + '/' + configFileName;
+        String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
+        String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
         System.out.println("Initialisation du site static");
 
         //RootDirectory
@@ -117,7 +112,7 @@ public class Init implements Callable<Integer> {
 
         } else {
             createIndex();
-            FileHandler.create(pathIndex, getIndex().toString());
+            FileHandler.create(pathIndex, getIndex());
             createIndex = true;
         }
 
