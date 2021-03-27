@@ -63,6 +63,7 @@ public class Build implements Callable<Integer> {
                         Writer out = new FileWriter(filename);
                         Markdown md = new Markdown();
                         md.transform(in, out);
+                        out.close();
                         file.delete();
                     }
                     else if(file.getName().equals("config.yaml")) //On elimine le fichier de config
