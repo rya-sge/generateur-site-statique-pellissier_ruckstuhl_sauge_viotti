@@ -30,7 +30,7 @@ public class Build implements Callable<Integer> {
         String source = rootDirectory;
         File srcDir = new File(source);
 
-        String destination = rootDirectory+"/build/";
+        String destination = rootDirectory + "/build/";
         File destDir = new File(destination);
 
         if(destDir.exists())
@@ -45,7 +45,7 @@ public class Build implements Callable<Integer> {
         }
 
         //Copie intégrale des fichiers présent dans build, puis conversion et clean du dossier
-        File folder = new File(rootDirectory+"/build/");
+        File folder = new File(rootDirectory + "/build/");
         File[] listofFiles = folder.listFiles();
         for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
         {
@@ -69,7 +69,7 @@ public class Build implements Callable<Integer> {
                         out.close();
                         file.delete();
                     }
-                    else if(file.getName().equals("config.yaml")) //On elimine le fichier de config
+                    else if(file.getName().equals(Constantes.CONFIG_FILE_NAME)) //On elimine le fichier de config
                     {
                         file.delete(); //
                     }
