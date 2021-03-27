@@ -26,7 +26,6 @@ public class Init implements Callable<Integer> {
     private String rootDirectory;
 
     /**
-     *
      * @return
      */
     public String getIndex() {
@@ -40,14 +39,16 @@ public class Init implements Callable<Integer> {
     private String configFileName = "config.json";
 
 
-
     //Booléean indiquant si un fichir existe ou pas
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
 
 
-    void createIndex(){
+    /**
+     * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
+     */
+    void createIndex() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         String titre = "Mon premier article";
@@ -60,7 +61,6 @@ public class Init implements Callable<Integer> {
     }
 
     /**
-     * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
      * @return
      */
     @Override
@@ -76,9 +76,9 @@ public class Init implements Callable<Integer> {
         System.out.println("Initialisation du site static");
 
         //RootDirectory
-        if(exists(rootDirectory)){
+        if (exists(rootDirectory)) {
             System.out.println("Le dossier root existe déjà");
-        }else{
+        } else {
             File root = new File(rootDirectory);
             root.mkdirs();
             System.out.println("Le dossier root a été créee");
@@ -86,9 +86,9 @@ public class Init implements Callable<Integer> {
         }
 
         //Fichier de configuration
-        if( exists(pathFileConfig)){
+        if (exists(pathFileConfig)) {
             System.out.println("Le fichier de config existe déjà");
-        }else{
+        } else {
             JSONConfig config = new JSONConfig(pathFileConfig);
             System.out.println("Le fichier de configuration doit être crée :");
             Scanner sc = new Scanner(System.in);
@@ -112,16 +112,16 @@ public class Init implements Callable<Integer> {
         }
 
         //Index du site
-        if( exists(pathIndex)){
+        if (exists(pathIndex)) {
             System.out.println("index.md existe déjà");
 
-        }else{
+        } else {
             createIndex();
-            FileHandler.create(pathIndex, getIndex().toString() );
+            FileHandler.create(pathIndex, getIndex().toString());
             createIndex = true;
         }
 
-        return 0;
+        return 1;
     }
 
 }

@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.Utils.readFile;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
 
@@ -31,8 +32,13 @@ class InitTest {
         }
         return directoryToBeDeleted.delete();
     }
+
     @Test
     @Order(1)
+    /**
+     * Lancement de la commande init.
+     * Si des fichiers issus d'un précédent test existent déjà, ils sont supprimés
+     */
     void call() {
 
         //Suppression du dossier si il existe déjà
@@ -58,9 +64,13 @@ class InitTest {
         //Vérifier le contenu du fichier index.md
         assertEquals(readFile(new File(rootDirectory + '/' + "index.md")), i.getIndex());
     }
+
     @Test
     @Order(2)
-    void testFileConfig(){
+    /**
+     * Vérification du fichier de configuration crée au test 1
+     */
+    void testFileConfig() {
         //Vérification contenu json
         String path = rootDirectory + "/config.json";
 
@@ -74,9 +84,13 @@ class InitTest {
         assertEquals(domaine, config.getDomaine());
         assertEquals(description, config.getDescription());
     }
+
     @Test
     @Order(3)
-    void testFichierExistant(){
+    /**
+     * Lancement d'init alors que les fichiers existent déjà
+     */
+    void testFichierExistant() {
         //Test sur un dossier existant
         new CommandLine(i).execute(rootDirectory);
         assertEquals(i.createFileConfig, false);
