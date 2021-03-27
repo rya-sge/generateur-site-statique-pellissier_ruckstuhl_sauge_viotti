@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import picocli.CommandLine;
 import utils.JSONConfig;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -21,8 +20,8 @@ import static utils.FileHandler.readFile;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
-
-    final private String rootDirectory = "root";
+    private final String testFilesPath =  "src/test/java/utils/testfiles/";
+    final private String rootDirectory = testFilesPath  + "root";
     final String titre = "My Poney Back";
     final String domaine = "Sparkle.com";
     final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
@@ -57,7 +56,7 @@ class InitTest {
         assertEquals(listFile.length, 2);//config et index
 
         //Vérifier le contenu du fichier index.md
-        assertEquals(readFile(rootDirectory + '/' + "index.md"), i.getIndex());
+        assertEquals(readFile(rootDirectory + '/' + Constantes.INDEX_FILE_NAME), i.getIndex());
     }
 
     @Test
@@ -67,7 +66,7 @@ class InitTest {
      */
     void testFileConfig() {
         //Vérification contenu json
-        String path = rootDirectory + "/config.json";
+        String path = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
 
         JSONConfig config = new JSONConfig(path);
 
