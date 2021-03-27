@@ -115,4 +115,21 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Efface un dossier et son contenu.
+     * @param directory le dossier à effacer.
+     */
+    public void eraseNotEmptyDirectory(File directory){
+        File[] lFiles = directory.listFiles();
+        if (lFiles != null){
+            for (File file: lFiles){
+                if (file.isDirectory()){
+                    eraseNotEmptyDirectory(file);
+                }else {
+                    file.delete();
+                }
+            }
+        }
+        directory.delete();
+    }
 }
