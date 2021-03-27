@@ -34,9 +34,11 @@ public class Contenu {
         builder.append(titre);
         builder.append(auteur);
         builder.append(date);
-        Iterator it = contenu.iterator();
-        while (it.hasNext()) {
-            builder.append((String) (it.next()) + '\n');
+        if(contenu != null){
+            Iterator it = contenu.iterator();
+            while (it.hasNext()) {
+                builder.append((String) (it.next()) + '\n');
+            }
         }
         return builder.toString();
     }

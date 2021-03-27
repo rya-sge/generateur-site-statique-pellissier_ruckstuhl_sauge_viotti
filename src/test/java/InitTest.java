@@ -1,8 +1,8 @@
 /*
-Date : 27.03.2021
+Date : 14.03.2021
 Groupe : PRSV
 Description : Test cmd Init
- */
+*/
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -18,6 +18,7 @@ import java.io.InputStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.FileHandler.eraseNotEmptyDirectory;
 import static utils.FileHandler.readFile;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
 
