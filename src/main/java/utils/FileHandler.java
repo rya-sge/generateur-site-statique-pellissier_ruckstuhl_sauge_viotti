@@ -119,7 +119,7 @@ public class FileHandler {
      * Efface un dossier et son contenu.
      * @param directory le dossier à effacer.
      */
-    public void eraseNotEmptyDirectory(File directory){
+    public static void eraseNotEmptyDirectory(File directory){
         File[] lFiles = directory.listFiles();
         if (lFiles != null){
             for (File file: lFiles){

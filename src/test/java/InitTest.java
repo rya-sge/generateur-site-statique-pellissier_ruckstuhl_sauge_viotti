@@ -1,3 +1,9 @@
+/*
+Date : 27.03.2021
+Groupe : PRSV
+Description : Test cmd Init
+ */
+
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,6 +17,7 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.Utils.readFile;
+import static utils.FileHandler.eraseNotEmptyDirectory;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
@@ -20,18 +27,6 @@ class InitTest {
     final String domaine = "Sparkle.com";
     final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
     Init i = new Init();
-
-
-    //Src : https://www.baeldung.com/java-delete-directory
-    private boolean deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
-            }
-        }
-        return directoryToBeDeleted.delete();
-    }
 
     @Test
     @Order(1)
@@ -43,7 +38,7 @@ class InitTest {
 
         //Suppression du dossier si il existe déjà
         File f = new File(rootDirectory);
-        deleteDirectory(f);
+        eraseNotEmptyDirectory(f);
 
         String input = titre + '\n' + domaine + '\n' + description + '\n';
 
