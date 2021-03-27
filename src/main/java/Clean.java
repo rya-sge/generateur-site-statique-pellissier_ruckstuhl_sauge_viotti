@@ -21,15 +21,13 @@ class Clean implements Callable<Integer> {
     private String rootDirectory;
 
     @Override
-    public Integer call() throws Exception {
-        boolean buildNotFound = true;
+    public Integer call() {
         File root = new File(rootDirectory);
         File[] lFiles = root.listFiles();
         if(lFiles != null) {
             for (File file : lFiles) {
                 if (file.isDirectory() && file.getName().equals("build")) {
                     FileHandler.eraseNotEmptyDirectory(file);
-                    buildNotFound = false;
                     return 1;
                 }
             }
