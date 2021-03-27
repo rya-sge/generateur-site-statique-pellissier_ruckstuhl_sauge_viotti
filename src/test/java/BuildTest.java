@@ -13,13 +13,13 @@ public class BuildTest {
     void call() throws IOException {
 
         //Suppression du dossier si existant
-        File dir = new File("root");
+        File dir = new File("BuildTest");
         if(dir.exists())
         {
             FileUtils.forceDelete(dir);
         }
         //Création des dossiers root, résultat final ciblé
-        String argsInit = "root";
+        String argsInit = "BuildTest";
         Init i = new Init();
         Integer initRet = new CommandLine(i).execute(argsInit);
 
@@ -28,22 +28,23 @@ public class BuildTest {
 
         File index = new File(dir+"/build/");
         index.mkdir();
-        index = new File("root/build/index.html");
+        index = new File("BuildTest/build/index.html");
         index.createNewFile();
 
 
 
-        File dir2 = new File("root2");
+        File dir2 = new File("BuildTest2");
         if(dir2.exists())
         {
             FileUtils.forceDelete(dir2);
         }
+
         //Création des dossiers sur lesquels seront lancé la commande Build
-        String argsInit2 = "root2";
+        String argsInit2 = "BuildTest2";
         Init i2 = new Init();
         Integer initRet2 = new CommandLine(i2).execute(argsInit2);
 
-        String argsBuild = "root2";
+        String argsBuild = "BuildTest2";
         File config2 = new File(dir2+"/config.yaml");
         config2.createNewFile();
 
@@ -60,10 +61,18 @@ public class BuildTest {
         assertEquals(fileList.length, fileList2.length);
 
         //Vérifie que le fichier index a bien été converti dans le build
-        File index1 = new File("root/build/index.html");
-        assertEquals(index1.exists(), new File("root2/build/index.html").exists());
+        File index1 = new File("BuildTest/build/index.html");
+        File index2 = new File("BuildTest2/build/index.html");
+        assertEquals(index1.exists(), index2.exists());
 
-
+        if(dir.exists())
+        {
+           FileUtils.forceDelete(dir);
+        }
+        if(dir2.exists())
+        {
+            //FileUtils.deleteDirectory(dir2);
+        }
 
     }
 }

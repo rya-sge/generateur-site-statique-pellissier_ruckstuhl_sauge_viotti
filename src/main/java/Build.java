@@ -73,9 +73,7 @@ public class Build implements Callable<Integer> {
             }
 
         }
-
-
-        return null;
+        return 0;
     }
 
 }
