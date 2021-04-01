@@ -26,6 +26,9 @@ final public class MdToHtml {
         }
         Writer out = null;
         try {
+            if(!FileHandler.exists(dst))
+                FileHandler.create(dst, "");
+
             out = new FileWriter(dst);
         } catch (IOException e) {
             e.printStackTrace();

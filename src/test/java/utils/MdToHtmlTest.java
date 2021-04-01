@@ -6,8 +6,6 @@ import org.tautua.markdownpapers.parser.ParseException;
 
 import java.io.IOException;
 
-
-
 class MdToHtmlTest {
 
     final String SOURCE = "src/test/java/utils/testfiles/MdToHtmlFiles/in.md";
