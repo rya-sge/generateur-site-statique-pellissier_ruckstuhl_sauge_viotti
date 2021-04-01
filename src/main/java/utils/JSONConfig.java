@@ -26,7 +26,6 @@ public class JSONConfig {
     /* Méthodes privées */
 
     // écrit dans le fichier.
-    // TODO: Une classe qui gère la lecture/écriture des fichiers
     private boolean write(String data){
         try (FileWriter writer = new FileWriter(path)){
             writer.write(data);

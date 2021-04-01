@@ -85,8 +85,6 @@ public class FileHandler {
                 throw new Exception("Erreur de création des dossiers parents");
             }
 
-
-
             write(path, data);
 
 
