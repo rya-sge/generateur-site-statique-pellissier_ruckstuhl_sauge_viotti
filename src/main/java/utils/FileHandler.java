@@ -81,19 +81,12 @@ public class FileHandler {
             File file = new File(path);
 
             // Crée les répertoires parents s'ils n'existent pas encore
-            File dir = new File(file.getParent());
-            if(dir.mkdirs()){
-                //throw new Exception("Erreur de création des dossiers parents");
+            if(!createParentsDirectories(file)){
+                throw new Exception("Erreur de création des dossiers parents");
             }
 
-            if(file.createNewFile()){
-               // throw new Exception("Erreur de création du fichier");
-            }
+            write(path, data);
 
-            // S'il y a du contenu à écrire
-            if(! data.isEmpty()){
-                write(path, data);
-            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -123,7 +116,7 @@ public class FileHandler {
      * Efface un dossier et son contenu.
      * @param directory le dossier à effacer.
      */
-    public static void eraseNotEmptyDirectory(File directory){
+    public static boolean eraseNotEmptyDirectory(File directory){
         File[] lFiles = directory.listFiles();
         if (lFiles != null){
             for (File file: lFiles){
@@ -134,6 +127,19 @@ public class FileHandler {
                 }
             }
         }
-        directory.delete();
+        return directory.delete();
+    }
+
+    /**
+     * Créer l'arborescence de dossiers qu'un fichier a besoin pour être stocké
+     * @param file le fichier dont il faut extraire le chemin pour créer ses parents
+     * @return true si les dossiers parents ont été créés ou existent déjà
+     */
+    public static boolean createParentsDirectories(File file){
+        File dir = new File(file.getParent());
+        if(!exists(dir.toString())){
+            return dir.mkdirs();
+        }
+        return true;
     }
 }

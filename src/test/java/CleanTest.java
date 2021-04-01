@@ -4,6 +4,7 @@ Groupe : PRSV
 Description : Vérifie les valeurs de retour de Clean,java
  */
 
+import global.ConstantesTest;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import utils.FileHandler;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CleanTest {
 
-    private final String testFilesPath =  "src/test/java/utils/testfiles/";
+    private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
 
     @Test
     void cleanCallReturn0IfRootDoesNotExist(){
@@ -32,7 +33,7 @@ class CleanTest {
     void cleanCallReturn0IfFolderEmpty(){
         String rootName = testFilesPath + "emptyFolder";
         File root = new File(rootName);
-        root.mkdir();
+        root.mkdirs();
         Clean c = new Clean();
         Integer val = new CommandLine(c).execute(rootName);
 
@@ -44,7 +45,7 @@ class CleanTest {
 
         String rootName = testFilesPath + "noBuild";
         File root = new File(rootName);
-        root.mkdir();
+        root.mkdirs();
 
         String subRoot = rootName + "/subDir";
         String subRoot2 = rootName + "/subDir2";
@@ -54,8 +55,8 @@ class CleanTest {
         File subRoot2F = new File(subRoot2);
         File file1F = new File(file1);
 
-        subRootF.mkdir();
-        subRoot2F.mkdir();
+        subRootF.mkdirs();
+        subRoot2F.mkdirs();
         try {
             file1F.createNewFile();
         } catch (IOException e) {
@@ -93,10 +94,10 @@ class CleanTest {
         File file3F = new File(file3);
         File file4F = new File(file4);
 
-        subRootF.mkdir();
-        subRoot2F.mkdir();
-        buildF.mkdir();
-        subBuildF.mkdir();
+        subRootF.mkdirs();
+        subRoot2F.mkdirs();
+        buildF.mkdirs();
+        subBuildF.mkdirs();
         try {
             file1F.createNewFile();
             file2F.createNewFile();
@@ -117,7 +118,7 @@ class CleanTest {
 
         String rootName = testFilesPath + "eraseBuild";
         File root = new File(rootName);
-        root.mkdir();
+        root.mkdirs();
 
         String subRoot = rootName + "/subDir";
         String subRoot2 = rootName + "/subDir2";
@@ -137,15 +138,16 @@ class CleanTest {
         File file3F = new File(file3);
         File file4F = new File(file4);
 
-        subRootF.mkdir();
-        subRoot2F.mkdir();
-        buildF.mkdir();
-        subBuildF.mkdir();
+        subRootF.mkdirs();
+        subRoot2F.mkdirs();
+        buildF.mkdirs();
+        subBuildF.mkdirs();
         try {
             file1F.createNewFile();
             file2F.createNewFile();
             file3F.createNewFile();
             file4F.createNewFile();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
