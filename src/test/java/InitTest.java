@@ -4,6 +4,7 @@ Groupe : PRSV
 Description : Test cmd Init
 */
 
+import global.ConstantesTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static utils.FileHandler.readFile;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {
-    private final String testFilesPath =  "src/test/java/utils/testfiles/";
+    private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
     final private String rootDirectory = testFilesPath  + "root";
     final String titre = "My Poney Back";
     final String domaine = "Sparkle.com";
@@ -48,9 +49,9 @@ class InitTest {
         new CommandLine(i).execute(rootDirectory);
 
         //Vérifie le nombre de fichier créee;
-        assertEquals(i.createFileConfig, true);
-        assertEquals(i.createIndex, true);
-        assertEquals(i.createRootDirectory, true);
+        assertTrue(i.createFileConfig);
+        assertTrue(i.createIndex);
+        assertTrue(i.createRootDirectory);
 
         File[] listFile = f.listFiles();
         assertEquals(listFile.length, 2);//config et index
@@ -87,8 +88,8 @@ class InitTest {
     void testFichierExistant() {
         //Test sur un dossier existant
         new CommandLine(i).execute(rootDirectory);
-        assertEquals(i.createFileConfig, false);
-        assertEquals(i.createIndex, false);
-        assertEquals(i.createRootDirectory, false);
+        assertFalse(i.createFileConfig);
+        assertFalse(i.createIndex);
+        assertFalse(i.createRootDirectory);
     }
 }

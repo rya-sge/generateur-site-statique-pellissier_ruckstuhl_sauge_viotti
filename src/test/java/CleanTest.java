@@ -4,6 +4,7 @@ Groupe : PRSV
 Description : Vérifie les valeurs de retour de Clean,java
  */
 
+import global.ConstantesTest;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import utils.FileHandler;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CleanTest {
 
-    private final String testFilesPath =  "src/test/java/utils/testfiles/";
+    private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
 
     @Test
     void cleanCallReturn0IfRootDoesNotExist(){

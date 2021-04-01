@@ -1,18 +1,20 @@
 package utils;
 
+import global.ConstantesTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONConfigTest {
 
     @org.junit.jupiter.api.Test
     void WriteAndReadShouldBeCorrect() {
-        String path = "src/test/testConfig.json";
+        String path = ConstantesTest.TEST_FOLDER+"testConfig.json";
 
         JSONConfig config = new JSONConfig(path);
 
         String titre = "My Little Pony";
         String domaine = "BestPonyEver.com";
-        String description = "Friendschip is Magic";
+        String description = "Friendship is Magic";
         config.config(titre, domaine, description);
 
         assertEquals(titre, config.getTitre());
