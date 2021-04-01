@@ -10,7 +10,7 @@ import utils.Version;
         versionProvider = Version.class,
         description = "Générateur de site statique développé dans le cadre du cours GEN ",
         mixinStandardHelpOptions = true,
-        subcommands={New.class, Serve.class, Build.class, Clean.class, Init.class}
+        subcommands={Build.class, Clean.class, Init.class}
 )
 public class Statique implements Runnable {
     public static void main(String[] args ){
@@ -20,7 +20,7 @@ public class Statique implements Runnable {
 
     @Override
     public void run(){
-        System.out.println("Hello, world ");
+        int exitCode = new CommandLine(new Statique()).execute("--help");
 
     }
 }

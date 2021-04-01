@@ -13,8 +13,8 @@ import java.util.concurrent.Callable;
 import org.apache.commons.io.FileUtils;
 
 @CommandLine.Command(
-        name = "Build",
-        description = "Build"
+        name = "build",
+        description = "Compile le site statique"
 )
 public class Build implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
