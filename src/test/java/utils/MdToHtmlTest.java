@@ -6,6 +6,9 @@ import org.tautua.markdownpapers.parser.ParseException;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class MdToHtmlTest {
 
     final String SOURCE = "src/test/java/utils/testfiles/MdToHtmlFiles/in.md";
@@ -14,5 +17,7 @@ class MdToHtmlTest {
     @Test
     void isMdToHtmlWorking() throws IOException, ParseException {
         MdToHtml.mdTransform(SOURCE, DESTINATION);
+        assertTrue(FileHandler.exists(DESTINATION));
+        assertNotEquals(FileHandler.readFile(DESTINATION).length(),0);
     }
 }
