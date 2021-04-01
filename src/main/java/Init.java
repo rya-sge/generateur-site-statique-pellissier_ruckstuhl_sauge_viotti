@@ -34,7 +34,7 @@ public class Init implements Callable<Integer> {
 
     private Contenu index;
 
-    //Booléean indiquant si un fichir existe ou pas
+    //Booléean indiquant si un fichier existe ou pas
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
@@ -49,8 +49,8 @@ public class Init implements Callable<Integer> {
         String titre = "Mon premier article";
         String date = format.format(calendar.getTime());
         LinkedList<String> c = new LinkedList();
-        c.add("# Bienvenue vers le meilleur generateur");
-        c.add("## Page d'acceuil");
+        c.add("# Bienvenue vers le meilleur générateur");
+        c.add("## Page d'accueil");
         c.add("### Votre contenu");
         index = new Contenu(titre, "", date, c);
     }
@@ -68,7 +68,7 @@ public class Init implements Callable<Integer> {
         //Path
         String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
         String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
-        System.out.println("Initialisation du site static");
+        System.out.println("Initialisation du site statique");
 
         //RootDirectory
         if (exists(rootDirectory)) {
@@ -76,7 +76,7 @@ public class Init implements Callable<Integer> {
         } else {
             File root = new File(rootDirectory);
             root.mkdirs();
-            System.out.println("Le dossier root a été créee");
+            System.out.println("Le dossier root a été créé");
             createRootDirectory = true;
         }
 
@@ -85,7 +85,7 @@ public class Init implements Callable<Integer> {
             System.out.println("Le fichier de config existe déjà");
         } else {
             JSONConfig config = new JSONConfig(pathFileConfig);
-            System.out.println("Le fichier de configuration doit être crée :");
+            System.out.println("Le fichier de configuration doit être créé :");
             Scanner sc = new Scanner(System.in);
 
             //Titre

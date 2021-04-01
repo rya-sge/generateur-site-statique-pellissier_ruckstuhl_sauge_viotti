@@ -9,7 +9,6 @@ import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.concurrent.Callable;
 import org.apache.commons.io.FileUtils;
 

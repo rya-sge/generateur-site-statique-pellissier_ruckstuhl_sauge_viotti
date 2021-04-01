@@ -1,7 +1,7 @@
 /*
 Date : 05.03.2021
 Groupe : PRSV
-Description : Implémentation ccmd New
+Description : Implémentation cmd New
  */
 
 import picocli.CommandLine;
