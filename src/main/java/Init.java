@@ -31,8 +31,12 @@ public class Init implements Callable<Integer> {
     public String getIndex() {
         return index.toString();
     }
+    public String getPage() {
+        return page.toString();
+    }
 
     private Contenu index;
+    private Contenu page;
 
     //Booléean indiquant si un fichier existe ou pas
     //Util pour les tests
@@ -42,7 +46,8 @@ public class Init implements Callable<Integer> {
     public boolean createLayout  = false;
     public boolean createMenu = false;
     public boolean createContentDirectory = false;
-
+    public boolean createPage = false;
+    public boolean createImage = false;
     private String layoutContent =  "<html lang=\"en\">\n" +
             "<head>\n" +
             "<meta charset=\"utf-8\">\n" +
@@ -74,6 +79,18 @@ public class Init implements Callable<Integer> {
         index = new Contenu(titre, "", date, c);
     }
 
+    void createPage(){
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        String titre = "Mon premier article";
+        String date = format.format(calendar.getTime());
+        LinkedList<String> c = new LinkedList();
+        c.add("# Mon titre");
+        c.add("## Mon sous-titre");
+        c.add("Le contenu de mon article.");
+        c.add("![Une image](./image.png)");
+        page = new Contenu(titre, "", date, c);
+    }
 
     /**
      * @return
@@ -86,12 +103,17 @@ public class Init implements Callable<Integer> {
         createFileConfig = false;
         createLayout = false;
         createContentDirectory = false;
+        createImage = false;
+        createPage = false;
         //Path
         String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
         String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
-        String pathLayout = rootDirectory + '/' + Constantes.LAYOUT_FILE_NAME;
-        String pathMenu = rootDirectory + '/' + Constantes.MENU_FILE_NAME;
+        String pathLayout = rootDirectory + '/' + Constantes.LAYOUT_PATH;
+        String pathMenu = rootDirectory + '/' + Constantes.MENU_PATH;
         String pathContent = rootDirectory + '/' + Constantes.CONTENT_DIRECTORY;
+
+        String  pathPage = rootDirectory + '/' + Constantes.PAGE_PATH;
+        String  pathImage = rootDirectory + '/' + Constantes.IMAGE_PATH;
 
         System.out.println("Initialisation du site statique");
 
@@ -143,7 +165,7 @@ public class Init implements Callable<Integer> {
 
         //Layout
         if (exists(pathLayout)) {
-            System.out.println(Constantes.LAYOUT_FILE_NAME + " existe déjà");
+            System.out.println(Constantes.LAYOUT_PATH + " existe déjà");
 
         } else {
             FileHandler.create(pathLayout, layoutContent);
@@ -152,21 +174,32 @@ public class Init implements Callable<Integer> {
 
         //Menu
         if (exists(pathMenu)) {
-            System.out.println(Constantes.MENU_FILE_NAME + " existe déjà");
+            System.out.println(Constantes.MENU_PATH + " existe déjà");
 
         } else {
             FileHandler.create(pathMenu, menuContent);
             createMenu = true;
         }
 
-        // Content
-        if (exists(pathContent)) {
-            System.out.println("Le dossier" + Constantes.CONTENT_DIRECTORY + " existe déjà");
+        //page
+        if (exists(pathPage)) {
+            System.out.println(Constantes.PAGE_PATH + " existe déjà");
 
         } else {
-            new File(pathContent).mkdir( );
-            createContentDirectory = true;
+            createPage();
+            FileHandler.create(pathPage,  getPage());
+            createPage = true;
         }
+
+        //image
+        if (exists(pathImage)) {
+            System.out.println(Constantes.IMAGE_PATH + " existe déjà");
+
+        } else {
+            FileHandler.create(pathImage,  "");
+            createImage = true;
+        }
+
         return 1;
     }
 
