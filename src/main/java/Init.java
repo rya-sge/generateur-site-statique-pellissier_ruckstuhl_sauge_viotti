@@ -35,11 +35,29 @@ public class Init implements Callable<Integer> {
     private Contenu index;
 
     //Booléean indiquant si un fichier existe ou pas
+    //Util pour les tests
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
+    public boolean createLayout  = false;
+    public boolean createMenu = false;
 
+    private String layoutContent =  "<html lang=\"en\">\n" +
+            "<head>\n" +
+            "<meta charset=\"utf-8\">\n" +
+            "<title>{{ site.titre }} | {{ page.titre }}</title>\n" +
+            "</head>\n" +
+            "<body>\n" +
+            "{% include menu.html }\n" +
+            "{{ content }}\n" +
+            "</body>\n" +
+            "</html>";
 
+    private String menuContent =
+            "<ul>\n" +
+            "<li><a href=\"/index.html\">home</a></li>\n" +
+            "<li><a href=\"/content/page.html\">page</a></li>\n" +
+            "</ul>";
     /**
      * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
      */
@@ -55,6 +73,7 @@ public class Init implements Callable<Integer> {
         index = new Contenu(titre, "", date, c);
     }
 
+
     /**
      * @return
      */
@@ -64,10 +83,14 @@ public class Init implements Callable<Integer> {
         createIndex = false;
         createRootDirectory = false;
         createFileConfig = false;
+        createLayout = false;
 
         //Path
         String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
         String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
+        String pathLayout = rootDirectory + '/' + Constantes.LAYOUT_FILE_NAME;
+        String pathMenu = rootDirectory + '/' + Constantes.MENU_FILE_NAME;
+
         System.out.println("Initialisation du site statique");
 
         //RootDirectory
@@ -82,7 +105,7 @@ public class Init implements Callable<Integer> {
 
         //Fichier de configuration
         if (exists(pathFileConfig)) {
-            System.out.println("Le fichier de config existe déjà");
+            System.out.println("Le fichier de configuration existe déjà");
         } else {
             JSONConfig config = new JSONConfig(pathFileConfig);
             System.out.println("Le fichier de configuration doit être créé :");
@@ -108,7 +131,7 @@ public class Init implements Callable<Integer> {
 
         //Index du site
         if (exists(pathIndex)) {
-            System.out.println("index.md existe déjà");
+            System.out.println(Constantes.INDEX_FILE_NAME + " existe déjà");
 
         } else {
             createIndex();
@@ -116,6 +139,23 @@ public class Init implements Callable<Integer> {
             createIndex = true;
         }
 
+        //Layout
+        if (exists(pathLayout)) {
+            System.out.println(Constantes.LAYOUT_FILE_NAME + " existe déjà");
+
+        } else {
+            FileHandler.create(pathLayout, layoutContent);
+            createLayout = true;
+        }
+
+        //Menu
+        if (exists(pathMenu)) {
+            System.out.println(Constantes.MENU_FILE_NAME + " existe déjà");
+
+        } else {
+            FileHandler.create(pathMenu, menuContent);
+            createMenu = true;
+        }
         return 1;
     }
 

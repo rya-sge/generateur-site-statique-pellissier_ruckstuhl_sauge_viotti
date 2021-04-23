@@ -19,7 +19,7 @@ public class BuildTest {
     void call() throws IOException {
 
         //Suppression du dossier si existant
-        File dir = new File(testFilesPath+"BuildTest");
+        File dir = new File(testFilesPath + "BuildTest");
         if(dir.exists())
         {
             FileUtils.forceDelete(dir);
@@ -35,11 +35,11 @@ public class BuildTest {
 
         File indexHtml = new File(dir + "/build/");
         indexHtml.mkdir();
-        indexHtml = new File(testFilesPath+"BuildTest/build/index.html");
+        indexHtml = new File(testFilesPath + "BuildTest/build/index.html");
         indexHtml.createNewFile();
 
 
-        File dir2 = new File(testFilesPath+"BuildTest2");
+        File dir2 = new File(testFilesPath + "BuildTest2");
         if(dir2.exists())
         {
             FileUtils.forceDelete(dir2);
@@ -53,22 +53,22 @@ public class BuildTest {
         File index2 = new File(dir2 + "/" + Constantes.INDEX_FILE_NAME);
         index2.createNewFile();
 
-        String argsBuild = testFilesPath+"BuildTest2";
+        String argsBuild = testFilesPath + "BuildTest2";
         Build b = new Build();
         Integer buildRet = new CommandLine(b).execute(argsBuild);
 
         //Préparation des tests
-        File f = new File(testFilesPath+"BuildTest");
+        File f = new File(testFilesPath + "BuildTest");
         File[] fileList = f.listFiles();
-        File f2 = new File(testFilesPath+"BuildTest2");
+        File f2 = new File(testFilesPath + "BuildTest2");
         File[] fileList2 = f2.listFiles();
 
         //Vérifie que le nombre de fichiers soit équivalents
         assertEquals(fileList.length, fileList2.length);
 
         //Vérifie que le fichier index a bien été converti dans le build
-        File idxBase = new File(testFilesPath+"BuildTest/build/index.html");
-        File idxCreated = new File(testFilesPath+"BuildTest2/build/index.html");
+        File idxBase = new File(testFilesPath + "BuildTest/build/index.html");
+        File idxCreated = new File(testFilesPath + "BuildTest2/build/index.html");
         assertEquals(idxBase.exists(), idxCreated.exists());
 
         if(dir.exists())
