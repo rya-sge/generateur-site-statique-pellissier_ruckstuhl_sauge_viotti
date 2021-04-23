@@ -52,9 +52,9 @@ class InitTest {
         assertTrue(i.createFileConfig);
         assertTrue(i.createIndex);
         assertTrue(i.createRootDirectory);
-
+        assertTrue(i.createLayout);
         File[] listFile = f.listFiles();
-        assertEquals(listFile.length, 2);//config et index
+        assertEquals(listFile.length, 3);//config, index et layout
 
         //Vérifier le contenu du fichier index.md
         assertEquals(readFile(rootDirectory + '/' + Constantes.INDEX_FILE_NAME), i.getIndex());
@@ -91,5 +91,6 @@ class InitTest {
         assertFalse(i.createFileConfig);
         assertFalse(i.createIndex);
         assertFalse(i.createRootDirectory);
+        assertFalse(i.createLayout);
     }
 }
