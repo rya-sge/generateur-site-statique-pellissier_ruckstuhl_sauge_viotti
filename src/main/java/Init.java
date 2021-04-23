@@ -35,12 +35,14 @@ public class Init implements Callable<Integer> {
     private Contenu index;
 
     //Booléean indiquant si un fichier existe ou pas
+    //Util pour les tests
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
     public boolean createLayout  = false;
+    public boolean createMenu = false;
 
-    private String layoutContenu =  "<html lang=\"en\">\n" +
+    private String layoutContent =  "<html lang=\"en\">\n" +
             "<head>\n" +
             "<meta charset=\"utf-8\">\n" +
             "<title>{{ site.titre }} | {{ page.titre }}</title>\n" +
@@ -50,6 +52,12 @@ public class Init implements Callable<Integer> {
             "{{ content }}\n" +
             "</body>\n" +
             "</html>";
+
+    private String menuContent =
+            "<ul>\n" +
+            "<li><a href=\"/index.html\">home</a></li>\n" +
+            "<li><a href=\"/content/page.html\">page</a></li>\n" +
+            "</ul>";
     /**
      * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
      */
@@ -81,6 +89,7 @@ public class Init implements Callable<Integer> {
         String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
         String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
         String pathLayout = rootDirectory + '/' + Constantes.LAYOUT_FILE_NAME;
+        String pathMenu = rootDirectory + '/' + Constantes.MENU_FILE_NAME;
 
         System.out.println("Initialisation du site statique");
 
@@ -135,8 +144,17 @@ public class Init implements Callable<Integer> {
             System.out.println(Constantes.LAYOUT_FILE_NAME + " existe déjà");
 
         } else {
-            FileHandler.create(pathIndex, layoutContenu);
+            FileHandler.create(pathLayout, layoutContent);
             createLayout = true;
+        }
+
+        //Menu
+        if (exists(pathMenu)) {
+            System.out.println(Constantes.MENU_FILE_NAME + " existe déjà");
+
+        } else {
+            FileHandler.create(pathMenu, menuContent);
+            createMenu = true;
         }
         return 1;
     }
