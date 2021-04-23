@@ -36,11 +36,12 @@ public class Init implements Callable<Integer> {
 
     //Booléean indiquant si un fichier existe ou pas
     //Util pour les tests
-    public boolean createIndex = false;
+    public  boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
     public boolean createLayout  = false;
     public boolean createMenu = false;
+    public boolean createContentDirectory = false;
 
     private String layoutContent =  "<html lang=\"en\">\n" +
             "<head>\n" +
@@ -84,12 +85,13 @@ public class Init implements Callable<Integer> {
         createRootDirectory = false;
         createFileConfig = false;
         createLayout = false;
-
+        createContentDirectory = false;
         //Path
         String pathIndex = rootDirectory + '/' + Constantes.INDEX_FILE_NAME;
         String pathFileConfig = rootDirectory + '/' + Constantes.CONFIG_FILE_NAME;
         String pathLayout = rootDirectory + '/' + Constantes.LAYOUT_FILE_NAME;
         String pathMenu = rootDirectory + '/' + Constantes.MENU_FILE_NAME;
+        String pathContent = rootDirectory + '/' + Constantes.CONTENT_DIRECTORY;
 
         System.out.println("Initialisation du site statique");
 
@@ -155,6 +157,15 @@ public class Init implements Callable<Integer> {
         } else {
             FileHandler.create(pathMenu, menuContent);
             createMenu = true;
+        }
+
+        // Content
+        if (exists(pathContent)) {
+            System.out.println("Le dossier" + Constantes.CONTENT_DIRECTORY + " existe déjà");
+
+        } else {
+            new File(pathContent).mkdir( );
+            createContentDirectory = true;
         }
         return 1;
     }

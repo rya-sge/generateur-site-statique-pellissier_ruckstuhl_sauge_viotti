@@ -37,8 +37,8 @@ class InitTest {
     void call() {
 
         //Suppression du dossier si il existe déjà
-        File f = new File(rootDirectory);
-        eraseNotEmptyDirectory(f);
+        File fileRoot = new File(rootDirectory);
+        eraseNotEmptyDirectory(fileRoot);
 
         String input = titre + '\n' + domaine + '\n' + description + '\n';
 
@@ -55,8 +55,17 @@ class InitTest {
         assertTrue(i.createLayout);
         assertTrue(i.createMenu);
 
-        File[] listFile = f.listFiles();
-        assertEquals(listFile.length, 4);//config, index, menu et layout
+        File[] listFile = fileRoot.listFiles();
+        assertEquals(listFile.length, 4);//config, index, content et template
+
+        File fileContent = new File(rootDirectory + '/' + Constantes.CONTENT_DIRECTORY);
+        listFile = fileContent.listFiles();
+        assertEquals(listFile.length, 0); //CONTENT_DIRECTORY est vide lors de sa création
+
+
+        File fileTemplate = new File(rootDirectory + '/' + Constantes.TEMPLATE_DIRECTORY);
+        listFile = fileTemplate.listFiles();
+        assertEquals(listFile.length, 2); //menu et layout
 
         //Vérifier le contenu du fichier index.md
         assertEquals(readFile(rootDirectory + '/' + Constantes.INDEX_FILE_NAME), i.getIndex());
@@ -95,5 +104,6 @@ class InitTest {
         assertFalse(i.createRootDirectory);
         assertFalse(i.createLayout);
         assertFalse(i.createMenu);
+        assertFalse(i.createContentDirectory);
     }
 }
