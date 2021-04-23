@@ -105,7 +105,7 @@ public class Init implements Callable<Integer> {
 
         //Fichier de configuration
         if (exists(pathFileConfig)) {
-            System.out.println("Le fichier de configuaration existe déjà");
+            System.out.println("Le fichier de configuration existe déjà");
         } else {
             JSONConfig config = new JSONConfig(pathFileConfig);
             System.out.println("Le fichier de configuration doit être créé :");
