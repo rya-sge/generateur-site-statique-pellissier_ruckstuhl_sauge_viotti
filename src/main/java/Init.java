@@ -31,6 +31,11 @@ public class Init implements Callable<Integer> {
     public String getIndex() {
         return index.toString();
     }
+
+    /**
+     *
+     * @return
+     */
     public String getPage() {
         return page.toString();
     }
@@ -65,6 +70,7 @@ public class Init implements Callable<Integer> {
             "<li><a href=\"/content/page.html\">page</a></li>\n" +
             "</ul>";
     /**
+     * Création contenu de index
      * Source : http://www.codeurjava.com/2015/07/java-obtenir-la-date-et-heure-courante-avec-date-et-calendar.html
      */
     void createIndex() {
@@ -79,6 +85,9 @@ public class Init implements Callable<Integer> {
         index = new Contenu(titre, "", date, c);
     }
 
+    /**
+     * Création du contenu de page
+     */
     void createPage(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
