@@ -45,7 +45,7 @@ public class Init implements Callable<Integer> {
 
     //Booléean indiquant si un fichier existe ou pas
     //Util pour les tests
-    public  boolean createIndex = false;
+    public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
     public boolean createLayout  = false;

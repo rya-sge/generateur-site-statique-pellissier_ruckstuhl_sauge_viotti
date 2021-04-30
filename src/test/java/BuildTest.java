@@ -55,7 +55,7 @@ public class BuildTest {
 
         String argsBuild = testFilesPath + "BuildTest2";
         Build b = new Build();
-        Integer buildRet = new CommandLine(b).execute(argsBuild);
+        assertEquals(1,new CommandLine(b).execute(argsBuild));
 
         //Préparation des tests
         File f = new File(testFilesPath + "BuildTest");
