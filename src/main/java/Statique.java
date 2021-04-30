@@ -10,7 +10,7 @@ import utils.Version;
         versionProvider = Version.class,
         description = "Générateur de site statique développé dans le cadre du cours GEN ",
         mixinStandardHelpOptions = true,
-        subcommands={Build.class, Clean.class, Init.class}
+        subcommands={Build.class, Clean.class, Init.class, Serve.class}
 )
 public class Statique implements Runnable {
     public static void main(String[] args ){

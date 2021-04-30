@@ -1,3 +1,10 @@
+/*
+Date : 23.04.2021
+Modifié: 30.04.2021
+Groupe : PRSV
+Description : Implémentation handler pour Server http
+ */
+
 import com.sun.net.httpserver.*;
 
 import java.io.*;
@@ -9,24 +16,33 @@ import java.util.zip.*;
 public class StaticHandler implements HttpHandler
 {
     private static Map<String, Asset> data = new HashMap<>();
-    private final boolean caching, gzip;
     private final String pathToRoot;
 
-    public StaticHandler(String pathToRoot, boolean caching, boolean gzip) throws IOException {
-        this.caching = caching;
+    /**
+     * Constructeur
+     * @param pathToRoot chemin du dossier root
+     * @throws IOException
+     */
+    public StaticHandler(String pathToRoot) throws IOException {
         this.pathToRoot = pathToRoot.endsWith("/") ? pathToRoot : pathToRoot + "/";
-        this.gzip = gzip;
 
         File[] files = new File(pathToRoot).listFiles();
         if (files == null)
             throw new IllegalStateException("Couldn't find webroot: "+pathToRoot);
         for (File f: files)
-            processFile("", f, gzip);
+            processFile("", f);
     }
 
+    /**
+     * Class Asset
+     */
     private static class Asset {
         public final byte[] data;
 
+        /**
+         * Constructeur
+         * @param data donnée à insérer
+         */
         public Asset(byte[] data) {
             this.data = data;
         }
@@ -36,44 +52,43 @@ public class StaticHandler implements HttpHandler
     public void handle(HttpExchange httpExchange) throws IOException {
         String path = httpExchange.getRequestURI().getPath();
         try {
+            // Les // sont remplacés avec /
             path = path.substring(1);
             path = path.replaceAll("//", "/");
             if (path.length() == 0)
                 path = "index.html";
 
+            // Si l'URL n'est pas valide, celle de l'index est renvoyée
             boolean fromFile = new File(pathToRoot + path).exists();
             InputStream in = fromFile ? new FileInputStream(pathToRoot + path)
                     : ClassLoader.getSystemClassLoader().getResourceAsStream(pathToRoot + path);
             if (in == null) {
-                //String toAsset = pathToRoot + path + ".html";
-                String toAsset = pathToRoot + "index" + ".html"; //test
+                // renvoie l'index si la page n'est pas reconnue
+                String toAsset = pathToRoot + "index" + ".html";
                 fromFile = new File(toAsset).exists();
                 in = fromFile ? new FileInputStream(toAsset)
                         : ClassLoader.getSystemClassLoader().getResourceAsStream(toAsset);
             }
-            Asset res = caching ? data.get(path) : new Asset(readResource(in, gzip));
 
-            if (gzip)
-                httpExchange.getResponseHeaders().set("Content-Encoding", "gzip");
-            if (path.endsWith(".js"))
-                httpExchange.getResponseHeaders().set("Content-Type", "text/javascript");
-            else if (path.endsWith(".html"))
-                httpExchange.getResponseHeaders().set("Content-Type", "text/html");
-            else if (path.endsWith(".css"))
-                httpExchange.getResponseHeaders().set("Content-Type", "text/css");
-            else if (path.endsWith(".json"))
-                httpExchange.getResponseHeaders().set("Content-Type", "application/json");
-            else if (path.endsWith(".svg"))
-                httpExchange.getResponseHeaders().set("Content-Type", "image/svg+xml");
+            // Stocker les données
+            Asset res = new Asset(readResource(in));
+
+            // Recevoir réponse
+            httpExchange.getResponseHeaders().set("Content-Type", "text/html");
+
+            // Pas obligatoir
             if (httpExchange.getRequestMethod().equals("HEAD")) {
                 httpExchange.getResponseHeaders().set("Content-Length", "" + res.data.length);
                 httpExchange.sendResponseHeaders(200, -1);
                 return;
             }
 
+            // Envoyer réponse
             httpExchange.sendResponseHeaders(200, res.data.length);
             httpExchange.getResponseBody().write(res.data);
             httpExchange.getResponseBody().close();
+
+            // Gestion des erreurs
         } catch (NullPointerException t) {
             System.err.println("Error retrieving: " + path);
             t.printStackTrace();
@@ -85,17 +100,29 @@ public class StaticHandler implements HttpHandler
         }
     }
 
-    private static void processFile(String path, File f, boolean gzip) throws IOException {
+    /**
+     * Faire le process d'un fichier
+     * @param path chemin du fichier
+     * @param f Le fichier
+     * @throws IOException
+     */
+    private static void processFile(String path, File f) throws IOException {
         if (!f.isDirectory())
-            data.put(path + f.getName(), new Asset(readResource(new FileInputStream(f), gzip)));
+            data.put(path + f.getName(), new Asset(readResource(new FileInputStream(f))));
         if (f.isDirectory())
             for (File sub: f.listFiles())
-                processFile(path + f.getName() + "/", sub, gzip);
+                processFile(path + f.getName() + "/", sub);
     }
 
-    private static byte[] readResource(InputStream in, boolean gzip) throws IOException {
+    /**
+     * Lire les ressource du fichier
+     * @param in le fichier à lire
+     * @return les donnée du fichier en tableau de bytes
+     * @throws IOException
+     */
+    private static byte[] readResource(InputStream in) throws IOException {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        OutputStream gout = gzip ? new GZIPOutputStream(bout) : new DataOutputStream(bout);
+        OutputStream gout = new DataOutputStream(bout);
         byte[] tmp = new byte[4096];
         int r;
         while ((r=in.read(tmp)) >= 0)
@@ -106,6 +133,11 @@ public class StaticHandler implements HttpHandler
         return bout.toByteArray();
     }
 
+    /**
+     * Les ressources par rapport à l'élément directory
+     * @param directory l'élément à lire
+     * @return Liste des ressources
+     */
     private static List<String> getResources(String directory)
     {
         ClassLoader context = Thread.currentThread().getContextClassLoader();
@@ -121,6 +153,7 @@ public class StaticHandler implements HttpHandler
         String dir = directory.substring(0, slash + 1);
         for (int i=0; i<urls.length; i++)
         {
+
             if (!urls[i].toString().endsWith(".jar"))
                 continue;
             try
@@ -149,6 +182,8 @@ public class StaticHandler implements HttpHandler
             }
             catch (IOException e) { e.printStackTrace();}
         }
+
+
         InputStream stream = context.getResourceAsStream(directory);
         try
         {

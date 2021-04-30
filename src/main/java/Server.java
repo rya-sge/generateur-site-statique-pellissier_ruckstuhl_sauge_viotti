@@ -1,94 +1,9 @@
 /*
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
-// Read the full article https://dev.to/mateuszjarzyna/build-your-own-http-server-in-java-in-less-than-one-hour-only-get-method-2k02
-public class Server {
-
-    public static void main( String[] args ) throws Exception {
-        try (ServerSocket serverSocket = new ServerSocket(8080)) {
-            while (true) {
-                try (Socket client = serverSocket.accept()) {
-                    handleClient(client);
-                }
-            }
-        }
-    }
-
-    private static void handleClient(Socket client) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-        StringBuilder requestBuilder = new StringBuilder();
-        String line;
-        while (!(line = br.readLine()).isBlank()) {
-            requestBuilder.append(line + "\r\n");
-        }
-
-        String request = requestBuilder.toString();
-        String[] requestsLines = request.split("\r\n");
-        String[] requestLine = requestsLines[0].split(" ");
-        String method = requestLine[0];
-        String path = requestLine[1];
-        String version = requestLine[2];
-        String host = requestsLines[1].split(" ")[1];
-
-        List<String> headers = new ArrayList<>();
-        for (int h = 2; h < requestsLines.length; h++) {
-            String header = requestsLines[h];
-            headers.add(header);
-        }
-
-        String accessLog = String.format("Client %s, method %s, path %s, version %s, host %s, headers %s",
-                client.toString(), method, path, version, host, headers.toString());
-        System.out.println(accessLog);
-
-
-        Path filePath = getFilePath(path);
-        if (Files.exists(filePath)) {
-            // file exist
-            String contentType = guessContentType(filePath);
-            sendResponse(client, "200 OK", contentType, Files.readAllBytes(filePath));
-        } else {
-            // 404
-            byte[] notFoundContent = "<h1>Not found :(</h1>".getBytes();
-            sendResponse(client, "404 Not Found", "text/html", notFoundContent);
-        }
-
-    }
-
-    private static void sendResponse(Socket client, String status, String contentType, byte[] content) throws IOException {
-        OutputStream clientOutput = client.getOutputStream();
-        clientOutput.write(("HTTP/1.1 \r\n" + status).getBytes());
-        clientOutput.write(("ContentType: " + contentType + "\r\n").getBytes());
-        clientOutput.write("\r\n".getBytes());
-        clientOutput.write(content);
-        clientOutput.write("\r\n\r\n".getBytes());
-        clientOutput.flush();
-        client.close();
-    }
-
-    private static Path getFilePath(String path) {
-        if ("/".equals(path)) {
-            path = "/index.html";
-        }
-
-        return Paths.get("/tmp/www", path);
-    }
-
-    private static String guessContentType(Path filePath) throws IOException {
-        return Files.probeContentType(filePath);
-    }
-
-}
-*/
-
-
+Date : 23.04.2021
+Modifié: 30.04.2021
+Groupe : PRSV
+Description : Implémentation Server http fortement inspiré de https://github.com/ianopolous/simple-http-server
+ */
 
 import com.sun.net.httpserver.*;
 
@@ -97,15 +12,16 @@ import java.net.*;
 
 public class Server {
 
-    public static void main(String[] args) throws IOException {
-       /* if (args.length < 2 || args[0].equals("-help") || args[0].equals("-- help")) {
-                System.out.println("Usage: java -jar HttpServer.jar $web_root $port");
-        return;
-    }*/
-    HttpServer httpServer = HttpServer.create();
-	    httpServer.createContext("/", new StaticHandler(/*args[0]*/ "root2/build", false, false));
-        //int port = Integer.parseInt(args[1]);
-	    httpServer.bind(new InetSocketAddress("localhost", /*port*/ 8000), 100);
-	    httpServer.start();
-}
+    /**
+     * Démarre le serveur http sur le localhost
+     * @param pathToRoot le chemin du dossier root du site web
+     * @param port le numéro de port sur lequel le serveur écoute
+     * @throws IOException
+     */
+    public static void run(String pathToRoot, int port) throws IOException {
+        HttpServer httpServer = HttpServer.create();
+        httpServer.createContext("/", new StaticHandler(pathToRoot));
+        httpServer.bind(new InetSocketAddress("localhost", port), 100);
+        httpServer.start();
+    }
 }
