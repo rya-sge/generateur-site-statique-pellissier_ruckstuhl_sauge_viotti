@@ -2,6 +2,8 @@
 Date : 05.03.2021
 Groupe : PRSV
  */
+import java.util.concurrent.Callable;
+
 import picocli.CommandLine;
 import utils.Version;
 
@@ -12,15 +14,14 @@ import utils.Version;
         mixinStandardHelpOptions = true,
         subcommands={Build.class, Clean.class, Init.class}
 )
-public class Statique implements Runnable {
+public class Statique implements Callable<Integer> {
     public static void main(String[] args ){
         int exitCode = new CommandLine(new Statique()).execute(args);
         System.exit(exitCode);
     }
 
     @Override
-    public void run(){
-        int exitCode = new CommandLine(new Statique()).execute("--help");
-
+    public Integer call(){
+        return new CommandLine(new Statique()).execute("--help");
     }
 }
