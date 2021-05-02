@@ -41,7 +41,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>statique</finalName>
+              <finalName>statique-${project.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <archive>
                 <manifest>
