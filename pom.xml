@@ -6,7 +6,7 @@
 
   <groupId>ch.heigvd.prsv</groupId>
   <artifactId>statique</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
 
   <name>statique</name>
@@ -51,7 +51,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>statique</finalName>
+              <finalName>statique-${project.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <archive>
                 <manifest>
