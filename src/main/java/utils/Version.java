@@ -1,6 +1,5 @@
 package utils;
 
-import picocli.CommandLine;
 import picocli.CommandLine.IVersionProvider;
 
 public class Version implements IVersionProvider {
