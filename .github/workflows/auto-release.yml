@@ -12,11 +12,12 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       - name: "Create package"
         run: |
-          ls
-          mvn clean package
+              mvn clean package
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
