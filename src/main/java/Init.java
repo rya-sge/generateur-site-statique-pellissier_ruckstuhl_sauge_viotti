@@ -45,7 +45,7 @@ public class Init implements Callable<Integer> {
 
     //Booléean indiquant si un fichier existe ou pas
     //Util pour les tests
-    public  boolean createIndex = false;
+    public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
     public boolean createLayout  = false;
@@ -78,7 +78,7 @@ public class Init implements Callable<Integer> {
         Calendar calendar = Calendar.getInstance();
         String titre = "Mon premier article";
         String date = format.format(calendar.getTime());
-        LinkedList<String> c = new LinkedList();
+        LinkedList<String> c = new LinkedList<String>();
         c.add("# Bienvenue vers le meilleur générateur");
         c.add("## Page d'accueil");
         c.add("### Votre contenu");
@@ -93,7 +93,7 @@ public class Init implements Callable<Integer> {
         Calendar calendar = Calendar.getInstance();
         String titre = "Mon premier article";
         String date = format.format(calendar.getTime());
-        LinkedList<String> c = new LinkedList();
+        LinkedList<String> c = new LinkedList<String>();
         c.add("# Mon titre");
         c.add("## Mon sous-titre");
         c.add("Le contenu de mon article.");
@@ -155,6 +155,7 @@ public class Init implements Callable<Integer> {
             //Description
             System.out.println("Veuillez saisir une description:");
             String description = sc.nextLine();
+            sc.close();
 
             //Ecriture du fichier
             config.config(titre, domaine, description);
