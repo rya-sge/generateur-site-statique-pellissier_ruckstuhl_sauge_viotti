@@ -9,7 +9,14 @@ import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.io.FileUtils;
 
 @CommandLine.Command(
@@ -45,6 +52,48 @@ public class Build implements Callable<Integer> {
 
         //Copie intégrale des fichiers présent dans build, puis conversion et clean du dossier
         File folder = new File(rootDirectory + "/build/");
+        File contentFile = new File (folder+"/template");
+        if(contentFile.exists())
+        {
+            FileUtils.forceDelete(contentFile); //Suppression du dossier template
+        }
+
+        try(Stream<Path> walk = Files.walk(Paths.get(rootDirectory+"/build/"))){
+            List<File> result = walk.filter(Files::isRegularFile)
+                    .map(x -> x.toFile()).collect(Collectors.toList());
+            for(File f : result)
+            {
+                String filename = f.getName();
+                int index = filename.lastIndexOf('.');
+                if(index > 0) {
+                    String extension = filename.substring(index + 1);
+                    if(extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
+                    {
+                        Reader in = new FileReader(f);
+
+                        filename = f.getPath();
+                        filename = filename.replace("md","html");
+
+                        Writer out = new FileWriter(filename);
+                        Markdown md = new Markdown();
+                        md.transform(in, out);
+
+                        out.close();
+                        f.delete();
+                    }
+                    else if(f.getName().equals("config.yaml")) //On elimine le fichier de config
+                    {
+                        f.delete(); //
+                    }
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        /*
         File[] listofFiles = folder.listFiles();
         for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
         {
@@ -75,7 +124,7 @@ public class Build implements Callable<Integer> {
                 }
             }
 
-        }
+        }*/
         return 1;
     }
 
