@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,11 +88,11 @@ public class BuildTest {
 
         if(dir.exists())
         {
-           FileUtils.forceDelete(dir);
+        //   FileUtils.forceDelete(dir);
         }
         if(dir2.exists())
         {
-            FileUtils.forceDelete(dir2);
+        //    FileUtils.forceDelete(dir2);
         }
 
     }
