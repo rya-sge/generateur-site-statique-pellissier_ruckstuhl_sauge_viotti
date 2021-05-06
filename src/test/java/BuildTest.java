@@ -7,6 +7,7 @@ import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+import utils.HandlerbarTest;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,15 +23,8 @@ public class BuildTest {
     private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
     final private String rootDirectory = testFilesPath  + "/BuildTest";
 
-    @Test
-    void call() throws IOException {
-        List<File> listFiles = new ArrayList<>();
-        List<File> listDir = new ArrayList<>();
-        if(new File(rootDirectory).exists())
-        {
-            FileUtils.forceDelete(new File(rootDirectory));
-        }
 
+    void createArborescence(){
         final String titre = "My Poney Back";
         final String domaine = "Sparkle.com";
         final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
@@ -42,6 +36,20 @@ public class BuildTest {
         System.setIn(in);
 
         new CommandLine(i).execute(rootDirectory);
+    }
+    @Test
+    void call() throws IOException {
+
+        List<File> listFiles = new ArrayList<>();
+        List<File> listDir = new ArrayList<>();
+        if(new File(rootDirectory).exists())
+        {
+            FileUtils.forceDelete(new File(rootDirectory));
+        }
+
+        createArborescence();
+
+
 
         //Suppression du dossier si existant
         File dir = new File(testFilesPath + "BuildTest");
@@ -71,13 +79,18 @@ public class BuildTest {
             FileUtils.forceDelete(dir2);
         }
 
+
         //Création des dossiers sur lesquels seront lancé la commande Build
         FileUtils.copyDirectory(dir,dir2);
-        File dir2Build = new File (dir2+"/build");
+        File dir2Build = new File (dir2 + "/build");
         if(dir2Build.exists())
         {
             FileUtils.forceDelete(dir2Build);
         }
+
+        //Test handlebar
+        HandlerbarTest ht = new HandlerbarTest();
+        ht.test();
 
         Build b = new Build();
         assertEquals(1,new CommandLine(b).execute(dir2.toString()));

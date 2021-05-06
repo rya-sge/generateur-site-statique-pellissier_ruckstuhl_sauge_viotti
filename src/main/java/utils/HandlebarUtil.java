@@ -19,19 +19,20 @@ public class HandlebarUtil {
         this.template = template;
     }
     public HandlebarUtil(String rootDirectory){
-       this(".html", rootDirectory, "layout");
+       this( rootDirectory,".html", "layout");
     }
 
-    public void transform(Map<String, String> parameterMap){
+    public String transform(Map<String, String> parameterMap){
         //Compilation
         String prefix = rootDirectory + "/" + "template";
         TemplateLoader templateLoader = new FileTemplateLoader(prefix, suffix);
         Handlebars handlebars = new Handlebars(templateLoader);
         try {
             Template template = handlebars.compile(this.template);
-            System.out.println(template.apply(parameterMap));
+            return template.apply(parameterMap);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }

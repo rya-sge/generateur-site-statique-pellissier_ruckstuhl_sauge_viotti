@@ -2,7 +2,7 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
-class HandlebarTest {
+class HandlebarTestOld {
 
     @Test
     void transform() {
