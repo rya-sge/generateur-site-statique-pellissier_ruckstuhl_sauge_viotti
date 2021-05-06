@@ -154,8 +154,8 @@ class CleanTest {
         }
 
         Clean c = new Clean();
-        Integer val = new CommandLine(c).execute(rootName);
-
+        Integer ret = new CommandLine(c).execute(rootName);
+        assertEquals(1, ret);
         assertFalse(FileHandler.exists(build));
     }
 }

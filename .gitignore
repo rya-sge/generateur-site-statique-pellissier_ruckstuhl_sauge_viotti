@@ -1,2 +1,7 @@
 /target/
 /.idea/
+.project
+.settings
+.classpath
+.vscode/launch.json
+.vscode/settings.json
