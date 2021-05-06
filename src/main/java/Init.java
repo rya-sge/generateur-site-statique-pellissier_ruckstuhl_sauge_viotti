@@ -56,10 +56,10 @@ public class Init implements Callable<Integer> {
     private String layoutContent =  "<html lang=\"en\">\n" +
             "<head>\n" +
             "<meta charset=\"utf-8\">\n" +
-            "<title>{{ site.titre }} | {{ page.titre }}</title>\n" +
+            "<title>{{ site }} | {{ page }}</title>\n" +
             "</head>\n" +
             "<body>\n" +
-            "{% include menu.html }\n" +
+            "{{>menu }}\n" +
             "{{ content }}\n" +
             "</body>\n" +
             "</html>";
@@ -79,9 +79,9 @@ public class Init implements Callable<Integer> {
         String titre = "Mon premier article";
         String date = format.format(calendar.getTime());
         LinkedList<String> c = new LinkedList<String>();
-        c.add("# Bienvenue vers le meilleur générateur");
-        c.add("## Page d'accueil");
-        c.add("### Votre contenu");
+        c.add("\n# Bienvenue vers le meilleur générateur #\n");
+        c.add("## Page d'accueil ##\n");
+        c.add("### Votre contenu ###\n");
         index = new Contenu(titre, "", date, c);
     }
 
@@ -94,8 +94,8 @@ public class Init implements Callable<Integer> {
         String titre = "Mon premier article";
         String date = format.format(calendar.getTime());
         LinkedList<String> c = new LinkedList<String>();
-        c.add("# Mon titre");
-        c.add("## Mon sous-titre");
+        c.add("\n# Mon titre #\n");
+        c.add("## Mon sous-titre ##\n");
         c.add("Le contenu de mon article.");
         c.add("![Une image](./image.png)");
         page = new Contenu(titre, "", date, c);
