@@ -7,77 +7,100 @@ import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class BuildTest {
     private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
+    final private String rootDirectory = testFilesPath  + "/BuildTest";
 
     @Test
     void call() throws IOException {
+        List<File> listFiles = new ArrayList<>();
+        List<File> listDir = new ArrayList<>();
+        if(new File(rootDirectory).exists())
+        {
+            FileUtils.forceDelete(new File(rootDirectory));
+        }
+
+        final String titre = "My Poney Back";
+        final String domaine = "Sparkle.com";
+        final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
+        Init i = new Init();
+        String input = titre + '\n' + domaine + '\n' + description + '\n';
+
+        /* Src : https://www.codota.com/code/java/methods/java.lang.System/setIn */
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        new CommandLine(i).execute(rootDirectory);
 
         //Suppression du dossier si existant
-        File dir = new File(testFilesPath+"BuildTest");
-        if(dir.exists())
-        {
-            FileUtils.forceDelete(dir);
-        }
+        File dir = new File(testFilesPath + "BuildTest");
         //Création des dossiers root, résultat final ciblé
-        FileUtils.forceMkdir(dir);
 
-        File config = new File(dir + "/" + Constantes.CONFIG_FILE_NAME);
-        config.createNewFile();
+        listDir.add(new File(dir+"/build/content/"));
+        listDir.add(new File(dir + "/build/"));
 
-        File index = new File(dir + "/" + Constantes.INDEX_FILE_NAME);
-        index.createNewFile();
+        for(File d : listDir)
+        {
+            FileUtils.forceMkdir(d);
+        }
 
-        File indexHtml = new File(dir + "/build/");
-        indexHtml.mkdir();
-        indexHtml = new File(testFilesPath+"BuildTest/build/index.html");
-        indexHtml.createNewFile();
+        listFiles.add(new File(dir + "/build/content/page.html"));
+        listFiles.add(new File(dir + "/build/content/image.png"));
+        listFiles.add(new File(dir + "/build/index.html"));
 
+        for(File f : listFiles)
+        {
+            f.createNewFile();
+        }
 
-        File dir2 = new File(testFilesPath+"BuildTest2");
+        //Création du second dossier
+        File dir2 = new File(testFilesPath + "BuildTest2");
         if(dir2.exists())
         {
             FileUtils.forceDelete(dir2);
         }
 
         //Création des dossiers sur lesquels seront lancé la commande Build
-        FileUtils.forceMkdir(dir2);
-        File config2 = new File(dir2 + "/" + Constantes.CONFIG_FILE_NAME);
-        config2.createNewFile();
+        FileUtils.copyDirectory(dir,dir2);
+        File dir2Build = new File (dir2+"/build");
+        if(dir2Build.exists())
+        {
+            FileUtils.forceDelete(dir2Build);
+        }
 
-        File index2 = new File(dir2 + "/" + Constantes.INDEX_FILE_NAME);
-        index2.createNewFile();
-
-        String argsBuild = testFilesPath+"BuildTest2";
         Build b = new Build();
-        Integer buildRet = new CommandLine(b).execute(argsBuild);
+        assertEquals(1,new CommandLine(b).execute(dir2.toString()));
 
         //Préparation des tests
-        File f = new File(testFilesPath+"BuildTest");
-        File[] fileList = f.listFiles();
-        File f2 = new File(testFilesPath+"BuildTest2");
-        File[] fileList2 = f2.listFiles();
+        File[] fileList = dir.listFiles();
+        File[] fileList2 = dir2.listFiles();
 
         //Vérifie que le nombre de fichiers soit équivalents
         assertEquals(fileList.length, fileList2.length);
 
         //Vérifie que le fichier index a bien été converti dans le build
-        File idxBase = new File(testFilesPath+"BuildTest/build/index.html");
-        File idxCreated = new File(testFilesPath+"BuildTest2/build/index.html");
+        File idxBase = new File(testFilesPath + "BuildTest/build/index.html");
+        File idxCreated = new File(testFilesPath + "BuildTest2/build/index.html");
         assertEquals(idxBase.exists(), idxCreated.exists());
 
         if(dir.exists())
         {
-           FileUtils.forceDelete(dir);
+        //   FileUtils.forceDelete(dir);
         }
         if(dir2.exists())
         {
-            FileUtils.forceDelete(dir2);
+        //    FileUtils.forceDelete(dir2);
         }
 
     }
