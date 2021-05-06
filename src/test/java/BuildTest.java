@@ -7,11 +7,11 @@ import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,22 +20,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuildTest {
     private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
+    final private String rootDirectory = testFilesPath  + "/BuildTest";
 
     @Test
     void call() throws IOException {
         List<File> listFiles = new ArrayList<>();
         List<File> listDir = new ArrayList<>();
+        if(new File(rootDirectory).exists())
+        {
+            FileUtils.forceDelete(new File(rootDirectory));
+        }
+
+        final String titre = "My Poney Back";
+        final String domaine = "Sparkle.com";
+        final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
+        Init i = new Init();
+        String input = titre + '\n' + domaine + '\n' + description + '\n';
+
+        /* Src : https://www.codota.com/code/java/methods/java.lang.System/setIn */
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        new CommandLine(i).execute(rootDirectory);
+
         //Suppression du dossier si existant
         File dir = new File(testFilesPath + "BuildTest");
-        if(dir.exists())
-        {
-            FileUtils.forceDelete(dir);
-        }
         //Création des dossiers root, résultat final ciblé
-        FileUtils.forceMkdir(dir);
 
-        listDir.add(new File(dir+"/content"));
-        listDir.add(new File(dir+"/template"));
         listDir.add(new File(dir+"/build/content/"));
         listDir.add(new File(dir + "/build/"));
 
@@ -44,14 +55,8 @@ public class BuildTest {
             FileUtils.forceMkdir(d);
         }
 
-        listFiles.add(new File(dir + "/content/page.md"));
-        listFiles.add(new File(dir + "/content/image.png"));
-        listFiles.add(new File(dir + "/template/menu.html"));
-        listFiles.add(new File(dir + "/template/layout.html"));
         listFiles.add(new File(dir + "/build/content/page.html"));
         listFiles.add(new File(dir + "/build/content/image.png"));
-        listFiles.add(new File(dir + "/" + Constantes.CONFIG_FILE_NAME));
-        listFiles.add(new File(dir + "/" + Constantes.INDEX_FILE_NAME));
         listFiles.add(new File(dir + "/build/index.html"));
 
         for(File f : listFiles)
@@ -91,11 +96,11 @@ public class BuildTest {
 
         if(dir.exists())
         {
-           FileUtils.forceDelete(dir);
+        //   FileUtils.forceDelete(dir);
         }
         if(dir2.exists())
         {
-            FileUtils.forceDelete(dir2);
+        //    FileUtils.forceDelete(dir2);
         }
 
     }

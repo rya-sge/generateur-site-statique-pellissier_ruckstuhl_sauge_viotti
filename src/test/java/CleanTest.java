@@ -11,6 +11,7 @@ import utils.FileHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
