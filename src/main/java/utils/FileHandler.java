@@ -30,6 +30,8 @@ public class FileHandler {
                 content.append((char)charCode);
             }
 
+            reader.close();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return content.toString();

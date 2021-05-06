@@ -75,7 +75,7 @@ public class BuildTest {
         }
 
         Build b = new Build();
-        Integer buildRet = new CommandLine(b).execute(dir2.toString());
+        assertEquals(1,new CommandLine(b).execute(dir2.toString()));
 
         //Préparation des tests
         File[] fileList = dir.listFiles();
