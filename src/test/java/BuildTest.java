@@ -9,6 +9,12 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -17,7 +23,8 @@ public class BuildTest {
 
     @Test
     void call() throws IOException {
-
+        List<File> listFiles = new ArrayList<>();
+        List<File> listDir = new ArrayList<>();
         //Suppression du dossier si existant
         File dir = new File(testFilesPath + "BuildTest");
         if(dir.exists())
@@ -27,18 +34,32 @@ public class BuildTest {
         //Création des dossiers root, résultat final ciblé
         FileUtils.forceMkdir(dir);
 
-        File config = new File(dir + "/" + Constantes.CONFIG_FILE_NAME);
-        config.createNewFile();
+        listDir.add(new File(dir+"/content"));
+        listDir.add(new File(dir+"/template"));
+        listDir.add(new File(dir+"/build/content/"));
+        listDir.add(new File(dir + "/build/"));
 
-        File index = new File(dir + "/" + Constantes.INDEX_FILE_NAME);
-        index.createNewFile();
+        for(File d : listDir)
+        {
+            FileUtils.forceMkdir(d);
+        }
 
-        File indexHtml = new File(dir + "/build/");
-        indexHtml.mkdir();
-        indexHtml = new File(testFilesPath + "BuildTest/build/index.html");
-        indexHtml.createNewFile();
+        listFiles.add(new File(dir + "/content/page.md"));
+        listFiles.add(new File(dir + "/content/image.png"));
+        listFiles.add(new File(dir + "/template/menu.html"));
+        listFiles.add(new File(dir + "/template/layout.html"));
+        listFiles.add(new File(dir + "/build/content/page.html"));
+        listFiles.add(new File(dir + "/build/content/image.png"));
+        listFiles.add(new File(dir + "/" + Constantes.CONFIG_FILE_NAME));
+        listFiles.add(new File(dir + "/" + Constantes.INDEX_FILE_NAME));
+        listFiles.add(new File(dir + "/build/index.html"));
 
+        for(File f : listFiles)
+        {
+            f.createNewFile();
+        }
 
+        //Création du second dossier
         File dir2 = new File(testFilesPath + "BuildTest2");
         if(dir2.exists())
         {
@@ -46,22 +67,19 @@ public class BuildTest {
         }
 
         //Création des dossiers sur lesquels seront lancé la commande Build
-        FileUtils.forceMkdir(dir2);
-        File config2 = new File(dir2 + "/" + Constantes.CONFIG_FILE_NAME);
-        config2.createNewFile();
+        FileUtils.copyDirectory(dir,dir2);
+        File dir2Build = new File (dir2+"/build");
+        if(dir2Build.exists())
+        {
+            FileUtils.forceDelete(dir2Build);
+        }
 
-        File index2 = new File(dir2 + "/" + Constantes.INDEX_FILE_NAME);
-        index2.createNewFile();
-
-        String argsBuild = testFilesPath + "BuildTest2";
         Build b = new Build();
-        Integer buildRet = new CommandLine(b).execute(argsBuild);
+        Integer buildRet = new CommandLine(b).execute(dir2.toString());
 
         //Préparation des tests
-        File f = new File(testFilesPath + "BuildTest");
-        File[] fileList = f.listFiles();
-        File f2 = new File(testFilesPath + "BuildTest2");
-        File[] fileList2 = f2.listFiles();
+        File[] fileList = dir.listFiles();
+        File[] fileList2 = dir2.listFiles();
 
         //Vérifie que le nombre de fichiers soit équivalents
         assertEquals(fileList.length, fileList2.length);

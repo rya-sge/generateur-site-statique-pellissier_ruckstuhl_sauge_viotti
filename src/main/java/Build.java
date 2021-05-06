@@ -81,7 +81,7 @@ public class Build implements Callable<Integer> {
                         out.close();
                         f.delete();
                     }
-                    else if(f.getName().equals("config.yaml")) //On elimine le fichier de config
+                    else if(f.getName().equals(Constantes.CONFIG_FILE_NAME)) //On elimine le fichier de config
                     {
                         f.delete(); //
                     }
