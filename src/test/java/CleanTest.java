@@ -11,6 +11,7 @@ import utils.FileHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -153,8 +154,8 @@ class CleanTest {
         }
 
         Clean c = new Clean();
-        Integer val = new CommandLine(c).execute(rootName);
-
+        Integer ret = new CommandLine(c).execute(rootName);
+        assertEquals(1, ret);
         assertFalse(FileHandler.exists(build));
     }
 }
