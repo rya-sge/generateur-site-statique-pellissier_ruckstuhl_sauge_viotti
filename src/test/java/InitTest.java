@@ -37,8 +37,8 @@ class InitTest {
     void call() {
 
         //Suppression du dossier si il existe déjà
-        File f = new File(rootDirectory);
-        eraseNotEmptyDirectory(f);
+        File fileRoot = new File(rootDirectory);
+        eraseNotEmptyDirectory(fileRoot);
 
         String input = titre + '\n' + domaine + '\n' + description + '\n';
 
@@ -52,12 +52,28 @@ class InitTest {
         assertTrue(i.createFileConfig);
         assertTrue(i.createIndex);
         assertTrue(i.createRootDirectory);
+        assertTrue(i.createLayout);
+        assertTrue(i.createMenu);
+        assertTrue(i.createPage);
+        assertTrue(i.createImage);
 
-        File[] listFile = f.listFiles();
-        assertEquals(listFile.length, 2);//config et index
+        File[] listFile = fileRoot.listFiles();
+        assertEquals(listFile.length, 4);//config, index, content et template
 
-        //Vérifier le contenu du fichier index.md
+        File fileContent = new File(rootDirectory + '/' + Constantes.CONTENT_DIRECTORY);
+        listFile = fileContent.listFiles();
+        assertEquals(listFile.length, 2); //CONTENT_DIRECTORY contient 2 fichiers
+
+
+        File fileTemplate = new File(rootDirectory + '/' + Constantes.TEMPLATE_DIRECTORY);
+        listFile = fileTemplate.listFiles();
+        assertEquals(listFile.length, 2); //menu et layout
+
+        //Vérifier le contenu du fichier INDEX_FILE_NAME
         assertEquals(readFile(rootDirectory + '/' + Constantes.INDEX_FILE_NAME), i.getIndex());
+
+        //Vérifier le contenu du fichier PAGE_PATH
+        assertEquals(readFile(rootDirectory + '/' + Constantes.PAGE_PATH), i.getPage());
     }
 
     @Test
@@ -91,5 +107,10 @@ class InitTest {
         assertFalse(i.createFileConfig);
         assertFalse(i.createIndex);
         assertFalse(i.createRootDirectory);
+        assertFalse(i.createLayout);
+        assertFalse(i.createMenu);
+        assertFalse(i.createContentDirectory);
+        assertFalse(i.createPage);
+        assertFalse(i.createImage);
     }
 }
