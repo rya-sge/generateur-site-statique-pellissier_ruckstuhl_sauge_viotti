@@ -1,14 +1,6 @@
 package utils;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
-
-
-
 import global.ConstantesTest;
-import org.junit.Test;
-import picocli.CommandLine;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -22,25 +14,18 @@ Ce test doit être lancé dans la commande build !!!
 Car il lui faut une arborescence
  */
 public class HandlerbarTest {
-    private final String testFilesPath =  ConstantesTest.TEST_FOLDER + "BuildTest";
+    private final String testFilesPath = ConstantesTest.TEST_FOLDER + "BuildTest";
+
     //@Test
     public void test() throws IOException {
+
         //Création de la map
         Map<String, String> parameterMap = new HashMap<>();
 
-        //Pair clé valeur name => Baeldung
+        //Pair clé valeur name pour handlebar
         parameterMap.put("site", "Titre du site");
         parameterMap.put("page", "Titre de la page");
-
-
         parameterMap.put("content", "contenu");
-
-        String fichierModele  = "pageModel.html";
-        String fichierCree =  testFilesPath + "/page.html";
-
-        String titrePage = "Mon titre";// process the line.
-        Handlebars handlebars = new Handlebars();
-
 
 
         //Création du content
@@ -58,9 +43,9 @@ public class HandlerbarTest {
         File f = new File(filename);
         f.delete();
 
-        String model = readFile( "src/test/java/utils/testfiles/result.html");
-        model = model.replaceAll("\r\n","\n");
-        assertEquals(model,result);
+        String model = readFile("src/test/java/utils/testfiles/result.html");
+        model = model.replaceAll("\r\n", "\n");
+        assertEquals(model, result);
     }
 
 }

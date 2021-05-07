@@ -3,6 +3,7 @@ Date : 27.03.2021
 Groupe : PRSV
 Description : Test cmd Build
  */
+
 import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
@@ -20,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class BuildTest {
-    private final String testFilesPath =  ConstantesTest.TEST_FOLDER;
-    final private String rootDirectory = testFilesPath  + "/BuildTest";
+    private final String testFilesPath = ConstantesTest.TEST_FOLDER;
+    final private String rootDirectory = testFilesPath + "/BuildTest";
 
 
-    void createArborescence(){
+    void createArborescence() {
         final String titre = "My Poney Back";
         final String domaine = "Sparkle.com";
         final String description = "Un Lieu Magic où les poney vivent en paix et en harmonie";
@@ -37,29 +38,28 @@ public class BuildTest {
 
         new CommandLine(i).execute(rootDirectory);
     }
+
     @Test
     void call() throws IOException {
 
         List<File> listFiles = new ArrayList<>();
         List<File> listDir = new ArrayList<>();
-        if(new File(rootDirectory).exists())
-        {
+        if (new File(rootDirectory).exists()) {
             FileUtils.forceDelete(new File(rootDirectory));
         }
 
         createArborescence();
 
 
-
         //Suppression du dossier si existant
         File dir = new File(testFilesPath + "BuildTest");
+
         //Création des dossiers root, résultat final ciblé
 
-        listDir.add(new File(dir+"/build/content/"));
+        listDir.add(new File(dir + "/build/content/"));
         listDir.add(new File(dir + "/build/"));
 
-        for(File d : listDir)
-        {
+        for (File d : listDir) {
             FileUtils.forceMkdir(d);
         }
 
@@ -67,24 +67,21 @@ public class BuildTest {
         listFiles.add(new File(dir + "/build/content/image.png"));
         listFiles.add(new File(dir + "/build/index.html"));
 
-        for(File f : listFiles)
-        {
+        for (File f : listFiles) {
             f.createNewFile();
         }
 
         //Création du second dossier
         File dir2 = new File(testFilesPath + "BuildTest2");
-        if(dir2.exists())
-        {
+        if (dir2.exists()) {
             FileUtils.forceDelete(dir2);
         }
 
 
         //Création des dossiers sur lesquels seront lancé la commande Build
-        FileUtils.copyDirectory(dir,dir2);
-        File dir2Build = new File (dir2 + "/build");
-        if(dir2Build.exists())
-        {
+        FileUtils.copyDirectory(dir, dir2);
+        File dir2Build = new File(dir2 + "/build");
+        if (dir2Build.exists()) {
             FileUtils.forceDelete(dir2Build);
         }
 
@@ -93,7 +90,7 @@ public class BuildTest {
         ht.test();
 
         Build b = new Build();
-        assertEquals(1,new CommandLine(b).execute(dir2.toString()));
+        assertEquals(1, new CommandLine(b).execute(dir2.toString()));
 
         //Préparation des tests
         File[] fileList = dir.listFiles();
@@ -107,13 +104,11 @@ public class BuildTest {
         File idxCreated = new File(testFilesPath + "BuildTest2/build/index.html");
         assertEquals(idxBase.exists(), idxCreated.exists());
 
-        if(dir.exists())
-        {
-        //   FileUtils.forceDelete(dir);
+        if (dir.exists()) {
+            //   FileUtils.forceDelete(dir);
         }
-        if(dir2.exists())
-        {
-        //    FileUtils.forceDelete(dir2);
+        if (dir2.exists()) {
+            //    FileUtils.forceDelete(dir2);
         }
 
     }
