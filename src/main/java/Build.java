@@ -13,6 +13,7 @@ import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,8 +49,7 @@ public class Build implements Callable<Integer> {
         String destination = rootDirectory + "/build/";
         File destDir = new File(destination);
 
-        if(destDir.exists())
-        {
+        if (destDir.exists()) {
             FileUtils.forceDelete(destDir);
         }
 
@@ -61,9 +61,8 @@ public class Build implements Callable<Integer> {
 
         //Copie intégrale des fichiers présent dans build, puis conversion et clean du dossier
         File folder = new File(rootDirectory + "/build/");
-        File contentFile = new File (folder + "/" + Constantes.TEMPLATE_DIRECTORY);
-        if(contentFile.exists())
-        {
+        File contentFile = new File(folder + "/" + Constantes.TEMPLATE_DIRECTORY);
+        if (contentFile.exists()) {
             FileUtils.forceDelete(contentFile); //Suppression du dossier template
         }
 
@@ -72,105 +71,76 @@ public class Build implements Callable<Integer> {
         config.read();
         String configTitre = config.getTitre();
 
-        try(Stream<Path> walk = Files.walk(Paths.get(rootDirectory + "/build/"))){
+        // parcourir récursivement l'arboresnce et l'ajote à result
+        // On fait ensuite un for each sur le contenu de result
+        try (Stream<Path> walk = Files.walk(Paths.get(rootDirectory + "/build/"))) {
             List<File> result = walk.filter(Files::isRegularFile)
                     .map(x -> x.toFile()).collect(Collectors.toList());
-            for(File f : result)
-            {
+            for (File f : result) {
                 String filename = f.getName();
                 int index = filename.lastIndexOf('.');
-                if(index > 0) {
+                if (index > 0) {
                     String extension = filename.substring(index + 1);
-                    if(extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
+                    if (extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
                     {
                         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f), StandardCharsets.UTF_8));
                         String line;
                         line = br.readLine();
-                        if(line.startsWith("titre : ")){
+                        if (line.startsWith("titre : ")) {
+                            br.close();
 
-                            //INline
-                            String titrePage = line.substring(8);// process the line.
-                            Handlebars handlebars = new Handlebars();
-                            Template template = handlebars.compileInline("Hi {{site}}! Hi {{page}}! Hi {{content}}!");
+                            String titrePage = line.substring(8);// Récupération du titre dans le fichier de config
 
-                            //Création de la map
+                            // Création de la map
                             Map<String, String> parameterMap = new HashMap<>();
 
-                            //Pair clé valeur name => Baeldung
+                            // Pair clé valeur name pour handlebar
                             parameterMap.put("site", configTitre);
                             parameterMap.put("page", titrePage);
-                            parameterMap.put("content", "contenu");
 
-                            HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
-                            handlebarLocal.transform(parameterMap);
-
-                            //On injectle contenu de la map sur le template
-                            String templateString = template.apply(parameterMap);
-                            System.out.println(templateString);
-
-
+                            // Lecture fichier markdown
                             Reader in = new FileReader(f);
+                            String filenameContent = f.getPath();
+                            filenameContent = filenameContent.replace("md", "");
 
-                            filename = f.getPath();
-                            filename = filename.replace("md","html");
+                            // Fichier html de destination
+                            filenameContent = filenameContent.replace(filenameContent, source + "/template/content" + ".html");
+                            Writer out = new FileWriter(filenameContent);
 
-                            Writer out = new FileWriter(filename);
+                            // Transformation md ->html
                             Markdown md = new Markdown();
                             md.transform(in, out);
-
                             out.close();
+                            in.close();
+
+                            //Applique handlebar
+                            HandlebarUtil handlebarLocal = new HandlebarUtil(rootDirectory);
+                            String resultHandlebar = handlebarLocal.transform(parameterMap);
+
+                            // Supprimer content
+                            File content = new File(filenameContent);
+                            content.delete();
+
+                            // Ecriture du résultat
+                            out = new FileWriter(f.getPath().replace("md", "html"));
+                            out.write(resultHandlebar);
+                            out.flush();
+                            out.close();
+
                             f.delete();
 
-
-
-                        }else{
+                        } else {
                             throw new IllegalArgumentException("La 1ère ligne doit être le titre");
                         }
-                    }
-                    else if(f.getName().equals(Constantes.CONFIG_FILE_NAME)) //On elimine le fichier de config
+                    } else if (f.getName().equals(Constantes.CONFIG_FILE_NAME)) //On elimine le fichier de config
                     {
                         f.delete();
                     }
                 }
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /*
-        File[] listofFiles = folder.listFiles();
-        for(File file : listofFiles) //Parcourt de tous les fichiers présents dans le dossier
-        {
-            if(file.isFile())
-            {
-                String filename = file.getName();
-                int index = filename.lastIndexOf('.');
-                if(index > 0) {
-                    String extension = filename.substring(index + 1);
-                    if(extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
-                    {
-                        Reader in = new FileReader(file);
-
-                        filename = file.getPath();
-                        filename = filename.replace("md","html");
-
-                        Writer out = new FileWriter(filename);
-                        Markdown md = new Markdown();
-                        md.transform(in, out);
-
-                        out.close();
-                        file.delete();
-                    }
-                    else if(file.getName().equals(Constantes.CONFIG_FILE_NAME)) //On elimine le fichier de config
-                    {
-                        file.delete(); //
-                    }
-                }
-            }
-
-        }*/
         return 1;
     }
 

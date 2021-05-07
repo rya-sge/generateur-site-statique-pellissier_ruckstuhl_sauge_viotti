@@ -1,4 +1,9 @@
 package utils;
+/*
+Date : 07.05.2021
+Groupe : PRSV
+Description : class pour le moteur de template handlebar
+ */
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
@@ -12,28 +17,44 @@ public class HandlebarUtil {
     private final String rootDirectory;
     private final String suffix;
     private final String template;
+    private final String prefix;
 
+    /**
+     * @param rootDirectory
+     * @param suffix
+     * @param template
+     */
     public HandlebarUtil(String rootDirectory, String suffix, String template) {
         this.rootDirectory = rootDirectory;
         this.suffix = suffix;
         this.template = template;
-    }
-    public HandlebarUtil(String rootDirectory){
-       this(".html", rootDirectory, "layout");
+        this.prefix = rootDirectory + "/" + "template";
     }
 
-    public void transform(Map<String, String> parameterMap){
-        //Compilation
-        String prefix = rootDirectory + "/" + "template";
+    /**
+     * @param rootDirectory
+     */
+    public HandlebarUtil(String rootDirectory) {
+        this(rootDirectory, ".html", "layout");
+    }
+
+    /**
+     * @param parameterMap
+     * @return
+     */
+    public String transform(Map<String, String> parameterMap) {
         TemplateLoader templateLoader = new FileTemplateLoader(prefix, suffix);
-        Handlebars handlebars = new Handlebars(templateLoader);
+        Handlebars handlebars = new Handlebars().with(templateLoader);
         try {
+            //Compilation du template
             Template template = handlebars.compile(this.template);
-            System.out.println(template.apply(parameterMap));
+            return template.apply(parameterMap);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
+
 }
 
 

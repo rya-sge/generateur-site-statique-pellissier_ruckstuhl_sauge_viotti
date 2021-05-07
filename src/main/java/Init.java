@@ -60,7 +60,7 @@ public class Init implements Callable<Integer> {
             "</head>\n" +
             "<body>\n" +
             "{{>menu }}\n" +
-            "{{ content }}\n" +
+            "{{>content }}\n" +
             "</body>\n" +
             "</html>";
 
