@@ -31,7 +31,7 @@ Développé dans le cadre du cours de Génie Logiciel à la HEIG-VD. Par le grou
 - Maven pour compiler depuis le code source
   - pas nécessaire si vous utilisez la version déjà compilée (statique-x.x.x.zip)
 
-En utilisant ce logiciel, vous acceptez les [conditions d'utilisation](LICENSE).
+En utilisant ce logiciel, vous acceptez les [conditions d'utilisation](LICENSE.md).
 
 ### Depuis la dernière release
 
