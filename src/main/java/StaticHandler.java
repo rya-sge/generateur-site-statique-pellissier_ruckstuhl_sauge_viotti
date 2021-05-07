@@ -2,7 +2,7 @@
 Date : 23.04.2021
 Modifié: 30.04.2021
 Groupe : PRSV
-Description : Implémentation handler pour Server http
+Description : Implémentation handler pour Server http fortement inspiré de https://github.com/ianopolous/simple-http-server
  */
 
 import com.sun.net.httpserver.*;
