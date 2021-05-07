@@ -13,6 +13,7 @@ import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -98,35 +99,27 @@ public class Build implements Callable<Integer> {
                             parameterMap.put("site", configTitre);
                             parameterMap.put("page", titrePage);
 
+                           // Reader in = new FileReader(f);
                             Reader in = new FileReader(f);
-
-                            filename = f.getPath();
-                            filename = filename.replace("md","html");
-
-                            Writer out = new FileWriter(filename);
+                            String filenameContent = f.getPath();
+                            filenameContent = filenameContent.replace("md","");
+                            filenameContent = filenameContent.replace(filenameContent,source + "/template/content" + ".html");
+                            Writer out = new FileWriter(filenameContent);
                             Markdown md = new Markdown();
                             md.transform(in, out);
                             out.close();
+                            in.close();
 
-                            //Lecture et définition encodage
-                            String contenu = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+                           // HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
+                           // String resultHandlebar = handlebarLocal.transform(parameterMap);
+                            String resultHandlebar ="";
+                            out = new FileWriter(f.getPath().replace("md", "html"));
+                            out.write(resultHandlebar);
+                            out.flush();
+                            out.close();
 
-                            //Pair clé valeur pour le template
-                            parameterMap.put("site", configTitre);
-                            parameterMap.put("page", titrePage);
-                            parameterMap.put("content", contenu);
-
-                            HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
-
-                            //Application template
-                            String resultString = handlebarLocal.transform(parameterMap);
-                            //On injectle contenu de la map sur le template
-                            FileWriter fw = new FileWriter(filename);
-                            FileUtils.writeStringToFile(new File(filename), resultString);
-                            System.out.println(resultString);
-
-                            f.delete();
-
+                            //f.delete();
+                            FileUtils.forceDelete(f);
 
                         }else{
                             throw new IllegalArgumentException("La 1ère ligne doit être le titre");
