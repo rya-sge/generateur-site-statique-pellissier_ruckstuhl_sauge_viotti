@@ -26,7 +26,7 @@ public class HandlebarUtil {
         //Compilation
         String prefix = rootDirectory + "/" + "template";
         TemplateLoader templateLoader = new FileTemplateLoader(prefix, suffix);
-        Handlebars handlebars = new Handlebars(templateLoader);
+        Handlebars handlebars = new Handlebars().with(templateLoader);
         try {
             Template template = handlebars.compile(this.template);
             return template.apply(parameterMap);
@@ -35,6 +35,7 @@ public class HandlebarUtil {
             return null;
         }
     }
+
 }
 
 

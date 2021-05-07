@@ -89,9 +89,7 @@ public class Build implements Callable<Integer> {
                         if(line.startsWith("titre : ")){
 
                             //INline
-                            String titrePage = line.substring(8);// process the line.
-                            Handlebars handlebars = new Handlebars();
-                            Template template = handlebars.compileInline("Hi {{site}}! Hi {{page}}! Hi {{content}}!");
+                           String titrePage = line.substring(8);// process the line.
 
                             //Création de la map
                             Map<String, String> parameterMap = new HashMap<>();
@@ -99,15 +97,6 @@ public class Build implements Callable<Integer> {
                             //Pair clé valeur name => Baeldung
                             parameterMap.put("site", configTitre);
                             parameterMap.put("page", titrePage);
-                            parameterMap.put("content", "contenu");
-
-                            HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
-                            handlebarLocal.transform(parameterMap);
-
-                            //On injectle contenu de la map sur le template
-                            String templateString = template.apply(parameterMap);
-                            System.out.println(templateString);
-
 
                             Reader in = new FileReader(f);
 
@@ -117,10 +106,26 @@ public class Build implements Callable<Integer> {
                             Writer out = new FileWriter(filename);
                             Markdown md = new Markdown();
                             md.transform(in, out);
-
                             out.close();
-                            f.delete();
 
+                            //Lecture et définition encodage
+                            String contenu = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+
+                            //Pair clé valeur pour le template
+                            parameterMap.put("site", configTitre);
+                            parameterMap.put("page", titrePage);
+                            parameterMap.put("content", contenu);
+
+                            HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
+
+                            //Application template
+                            String resultString = handlebarLocal.transform(parameterMap);
+                            //On injectle contenu de la map sur le template
+                            FileWriter fw = new FileWriter(filename);
+                            FileUtils.writeStringToFile(new File(filename), resultString);
+                            System.out.println(resultString);
+
+                            f.delete();
 
 
                         }else{
