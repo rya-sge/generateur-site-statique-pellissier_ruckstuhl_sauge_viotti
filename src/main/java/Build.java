@@ -88,38 +88,47 @@ public class Build implements Callable<Integer> {
                         String line;
                         line = br.readLine();
                         if(line.startsWith("titre : ")){
+                            br.close();
 
-                            //INline
-                           String titrePage = line.substring(8);// process the line.
+                           String titrePage = line.substring(8);// Récupération du titre dans le fichier de config
 
-                            //Création de la map
+                            // Création de la map
                             Map<String, String> parameterMap = new HashMap<>();
 
-                            //Pair clé valeur name => Baeldung
+                            // Pair clé valeur name => Baeldung
                             parameterMap.put("site", configTitre);
                             parameterMap.put("page", titrePage);
 
-                           // Reader in = new FileReader(f);
+                            // Lecture fichier mardown
                             Reader in = new FileReader(f);
                             String filenameContent = f.getPath();
                             filenameContent = filenameContent.replace("md","");
+
+                            // Fichier html de destination
                             filenameContent = filenameContent.replace(filenameContent,source + "/template/content" + ".html");
                             Writer out = new FileWriter(filenameContent);
+
+                            // Transformation md ->html
                             Markdown md = new Markdown();
                             md.transform(in, out);
                             out.close();
                             in.close();
 
-                           // HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
-                           // String resultHandlebar = handlebarLocal.transform(parameterMap);
-                            String resultHandlebar ="";
+                            //Appliqué handlebar
+                            HandlebarUtil handlebarLocal = new  HandlebarUtil(rootDirectory);
+                            String resultHandlebar = handlebarLocal.transform(parameterMap);
+
+                            // Supprimer content
+                            File content = new File(filenameContent);
+                            content.delete();
+
+                            // Ecriture du résultat
                             out = new FileWriter(f.getPath().replace("md", "html"));
                             out.write(resultHandlebar);
                             out.flush();
                             out.close();
 
-                            //f.delete();
-                            FileUtils.forceDelete(f);
+                            f.delete();
 
                         }else{
                             throw new IllegalArgumentException("La 1ère ligne doit être le titre");
