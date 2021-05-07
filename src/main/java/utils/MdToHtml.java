@@ -1,5 +1,14 @@
+/*
+Date : 14.03.2021
+Groupe : PRSV
+Description :
+Class permettant de donner le chemin d'un fichier .md et le
+transforme en html dans le répertoire de destination.
+ */
+
+
 /**
- * Class permettant de donner le chemin d'un fichier .md et le transforme en html dans le répertoire de destination.
+ *
  */
 
 package utils;
