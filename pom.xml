@@ -85,6 +85,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Source du code: https://github.com/marketplace/actions/jacoco-badge-generator -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
