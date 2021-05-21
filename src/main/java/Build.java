@@ -30,6 +30,8 @@ import utils.JSONConfig;
 public class Build implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
     private String rootDirectory;
+    @CommandLine.Option(names = "--watch", description = "Regarder en continu si des modifications sont effectuées")
+    boolean isWatch;
 
     @Override
     public Integer call() throws IOException, ParseException {
@@ -122,7 +124,10 @@ public class Build implements Callable<Integer> {
                             out.close();
 
                             f.delete();
-
+                            if(isWatch){
+                                WatchApi w = new WatchApi(rootDirectory);
+                                w.watch();
+                            }
                         } else {
                             throw new IllegalArgumentException("La 1ère ligne doit être le titre");
                         }
