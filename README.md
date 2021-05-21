@@ -1,9 +1,11 @@
 # Statique
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv)](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/releases/latest)
-[![GitHub issues](https://img.shields.io/github/issues-raw/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv)](https://github.com/david-pellissier/RES_PrankBot/issues)
 [![GitHub repo size](https://img.shields.io/github/repo-size/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv)](#)
+[![GitHub issues](https://img.shields.io/github/issues-raw/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv)](https://github.com/david-pellissier/RES_PrankBot/issues)
 [![GitHub all releases](https://img.shields.io/github/downloads/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/total)](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/releases/latest)
+
 [![Java CI with Maven](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/actions/workflows/maven.yml/badge.svg)](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/actions/workflows/maven.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/actions/workflows/CodeCoverage.yml)
 
 Générateur de site statique léger.
 
