@@ -18,10 +18,9 @@ Développé dans le cadre du cours de Génie Logiciel à la HEIG-VD. Par le grou
   - [Installation](#installation)
     - [Prérequis](#prérequis)
     - [Depuis la dernière release](#depuis-la-dernière-release)
-    - [Build depuis le code source](#build-depuis-le-code-source)
     - [Linux & MacOS](#linux-&-macos)
     - [Windows](#windows)
-    - [Installer à partir du le code source](#installer-à-partir-du-le-code-source)
+    - [Installer à partir du le code source](#installer-à-partir-du-code-source)
   - [Utilisation](#utilisation)
     - [Initialiser un nouveau site statique](#initialiser-un-nouveau-site-statique)
     - [Ajouter une page](#ajouter-une-page)
@@ -40,16 +39,7 @@ En utilisant ce logiciel, vous acceptez les [conditions d'utilisation](LICENSE.m
 
 ### Depuis la dernière release
 
-Télécharger et dézipper la [dernière version](releases/latest) du programme.
-
-### Build depuis le code source
-
-Télécharger et dézipper le code source de la [dernière version](releases/latest) du programme.
-
-```bash
-mvn clean install
-unzip -o target/statique.zip
-```
+Télécharger et dézipper la [dernière version](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/releases/latest) du programme.
 
 ### Linux & MacOS
 
@@ -66,9 +56,9 @@ Ajouter dans la variable d'environnement *PATH* le chemin vers *statique/bin/sta
 
 [Tutoriel si vous ne savez pas comment le faire](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
-## Installer à partir du le code source
+## Installer à partir du code source
 
-Télécharger et dézipper le code source de la [dernière version](releases/latest) du programme.
+Télécharger et dézipper le code source de la [dernière version](https://stackoverflow.com/questions/5816419/intellij-does-not-show-project-folders) du programme.
 
 Générez ensuite le package avec maven: `mvn package`
 
