@@ -101,8 +101,8 @@ public class WatchApi {
                         System.out.println(
                                 "Event kind:" + event.kind()
                                         + ". File affected: " + event.context() + ".");
-                        //new CommandLine(WatchApi.this.b).execute(WatchApi.this.rootDirectory.toString());
-
+                        new CommandLine(WatchApi.this.b).execute(WatchApi.this.rootDirectory.toString());
+                        break;
                 }
                 key.reset();
             }

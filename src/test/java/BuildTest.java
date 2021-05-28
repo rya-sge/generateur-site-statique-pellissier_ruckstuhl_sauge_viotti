@@ -140,11 +140,19 @@ public class BuildTest {
         c.add("Le contenu de mon article.");
         c.add("![Une image](./image.png)");
         Contenu page = new Contenu(titre, "", date, c);
+
+        try{
+            //En attend pour être sûr que le build a pu se faire
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         FileHandler.create(dir2 + "/content/test.md",  page.toString());
 
         try{
             //En attend pour être sûr que le build a pu se faire
-            Thread.sleep(4000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -159,7 +167,7 @@ public class BuildTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //assertEquals(true, fileWatchHtml.exists());
+       // assertEquals(true, fileWatchHtml.exists());
 
     }
 }
