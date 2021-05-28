@@ -1,7 +1,9 @@
 import picocli.CommandLine;
+import utils.WatchApiRegister;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class WatchApi {
     String rootDirectory;
@@ -10,14 +12,25 @@ public class WatchApi {
         this.rootDirectory = rootDirectory;
     }
 
+    /**
+     * Register the given directory and all its sub-directories with the WatchService.
+     */
+    private void registerAll(final Path start) throws IOException {
+        // register directory and sub-directories
+
+
+    }
     public void watch() {
         try{
             Build b = new Build();
             WatchService watchService
                     = FileSystems.getDefault().newWatchService();
-            Path path = Paths.get(rootDirectory);
+            //Path path = Paths.get(rootDirectory);
 
-            path.register(
+            Path dir = Paths.get(rootDirectory);
+            new WatchApiRegister(dir, true).processEvents();
+
+           /* path.register(
                     watchService,
                     StandardWatchEventKinds.ENTRY_CREATE,
                     StandardWatchEventKinds.ENTRY_DELETE,
