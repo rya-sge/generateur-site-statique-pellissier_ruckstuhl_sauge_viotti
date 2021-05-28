@@ -143,7 +143,7 @@ public class BuildTest {
 
         try{
             //En attend pour être sûr que le build a pu se faire
-            Thread.sleep(6000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -152,7 +152,7 @@ public class BuildTest {
 
         try{
             //En attend pour être sûr que le build a pu se faire
-            Thread.sleep(6000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -160,13 +160,13 @@ public class BuildTest {
         File fileWatchHtml = new File(testFilesPath + "BuildTest/BuildTest2/build/content/test.html");
         //Mettre fin à la watchApi
 
-        t.interrupt();
         try{
             //En attend pour être sûr que le build a pu se faire
-            Thread.sleep(4000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        t.interrupt();
        // assertEquals(true, fileWatchHtml.exists());
 
     }

@@ -76,7 +76,7 @@ public class Build implements Callable<Integer> {
             for (File f : result) {
                 String filename = f.getName();
                 int index = filename.lastIndexOf('.');
-                if (index > 0) {
+                if (index > 0 && f.exists()) {
                     String extension = filename.substring(index + 1);
                     if (extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
                     {

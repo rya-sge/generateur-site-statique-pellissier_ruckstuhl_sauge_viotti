@@ -11,6 +11,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 
 public class WatchApi {
     Build b = new Build();
+    boolean inWorking = false;
     String rootDirectory;
     public class WatchApiRegister {
 
@@ -95,17 +96,19 @@ public class WatchApi {
          */
         public void processEvents() throws InterruptedException {
             WatchKey key;
-            while ((key = watcher.take()) != null) {
+            while ((key = watcher.take()) != null && !inWorking) {
                 for (WatchEvent<?> event : key.pollEvents()) {
 
                         System.out.println(
                                 "Event kind:" + event.kind()
                                         + ". File affected: " + event.context() + ".");
                         new CommandLine(WatchApi.this.b).execute(WatchApi.this.rootDirectory.toString());
-                        break;
+                    inWorking = true;
+                    break;
                 }
                 key.reset();
             }
+            inWorking = false;
         }
 
         void usage() {
