@@ -1,3 +1,12 @@
+/*
+Date : 03.06.2021
+Groupe : PRSV
+Description : Watch Api pour le serveur http
+
+Sources :
+Le code utilisé provient de la documentation officielle d'Oracle :
+https://docs.oracle.com/javase/tutorial/essential/io/notification.html
+ */
 import picocli.CommandLine;
 
 import java.io.IOException;
@@ -5,21 +14,19 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class WatchApi {
     Build b = new Build();
     boolean inWorking = false;
     String rootDirectory;
+
     public class WatchApiRegister {
 
         private final WatchService watcher;
         private final Map<WatchKey,Path> keys;
-        private final boolean recursive;
         private boolean trace = false;
-
+        private  boolean recursive = false;
         @SuppressWarnings("unchecked")
         <T> WatchEvent<T> cast(WatchEvent<?> event) {
             return (WatchEvent<T>)event;
@@ -111,10 +118,6 @@ public class WatchApi {
             inWorking = false;
         }
 
-        void usage() {
-            System.err.println("usage: java WatchApiRegister [-r] dir");
-            System.exit(-1);
-        }
 
 
     }
@@ -125,25 +128,15 @@ public class WatchApi {
     }
 
 
+    /**
+     * Fonction principale
+     */
     public void watch() {
         try{
-
-            /*WatchService watchService
-                    = FileSystems.getDefault().newWatchService();*/
-            //Path path = Paths.get(rootDirectory);
-
-            Path dir = Paths.get(rootDirectory);
-            new WatchApiRegister(dir, true).processEvents();
-
-           /* path.register(
-                    watchService,
-                    StandardWatchEventKinds.ENTRY_CREATE,
-                    StandardWatchEventKinds.ENTRY_DELETE,
-                    StandardWatchEventKinds.ENTRY_MODIFY);
-
-            /*
-            Faire un walFileTree => faire un récursif
-             */
+            while(true){
+                Path dir = Paths.get(rootDirectory);
+                new WatchApiRegister(dir, true).processEvents();
+            }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

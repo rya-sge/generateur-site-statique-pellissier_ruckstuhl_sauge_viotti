@@ -152,12 +152,14 @@ public class BuildTest {
 
         try{
             //En attend pour être sûr que le build a pu se faire
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        File fileWatchHtml = new File(testFilesPath + "BuildTest/BuildTest2/build/content/test.html");
+        //Retsster
+        FileHandler.create(dir2 + "/content/test2.md",  page.toString());
+        //File fileWatchHtml = new File(testFilesPath + "BuildTest/BuildTest2/build/content/test.html");
         //Mettre fin à la watchApi
 
         try{
