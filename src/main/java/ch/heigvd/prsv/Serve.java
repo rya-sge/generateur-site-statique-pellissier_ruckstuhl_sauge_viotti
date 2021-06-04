@@ -31,24 +31,24 @@ class Serve implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        if (!FileHandler.exists(rootDirectory)){
+        if (!FileHandler.exists(rootDirectory)) {
             // L'élément n'existe pas
             return 1;
         }
         File root = new File(rootDirectory);
-        if (!root.isDirectory()){
+        if (!root.isDirectory()) {
             // L'élément n'est pas un dossier
             return 2;
         }
         File[] lFiles = root.listFiles();
-        if(lFiles != null) {
+        if (lFiles != null) {
             for (File file : lFiles) {
 
                 // Lancer le serveur, seulement si un dossier build est trouvé dans le root donné.
                 if (file.isDirectory() && file.getName().equals("build")) {
                     try {
-                     Thread t = null;
-                      if(isWatch){
+                        Thread t = null;
+                        if (isWatch) {
                             t = new Thread() {
                                 public void run() {
                                     new CommandLine(new Build()).execute(rootDirectory, "--watch");
@@ -59,12 +59,12 @@ class Serve implements Callable<Integer> {
                         Server.run(rootDirectory + "/build", 8080);
 
                         // Garder le server ouvert tant que l'utilisateur ne tape pas exit
-                        while (true){
+                        while (true) {
                             System.out.println("Ecrire \"exit\" pour arrêter le serveur");
                             exit = sc.nextLine();
-                            if (exit.equals("exit")){
+                            if (exit.equals("exit")) {
                                 // Le processus a été terminé par l'utilisateur
-                                if(t != null){
+                                if (t != null) {
                                     t.interrupt();
                                 }
                                 return 0;

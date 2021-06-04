@@ -9,6 +9,7 @@ import ch.heigvd.prsv.utils.WatchApi;
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -126,7 +127,7 @@ public class Build implements Callable<Integer> {
                             out.close();
 
                             f.delete();
-                            if(isWatch){
+                            if (isWatch) {
                                 WatchApi w = new WatchApi(rootDirectory);
                                 w.watch();
                             }
