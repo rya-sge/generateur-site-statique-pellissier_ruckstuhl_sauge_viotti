@@ -1,4 +1,4 @@
-package utils;
+package ch.heigvd.prsv.utils;
 
 import global.ConstantesTest;
 import org.junit.jupiter.api.Test;

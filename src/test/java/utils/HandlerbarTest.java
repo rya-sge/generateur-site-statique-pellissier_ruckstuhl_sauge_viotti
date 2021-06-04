@@ -1,4 +1,4 @@
-package utils;
+package ch.heigvd.prsv.utils;
 
 import global.ConstantesTest;
 import java.io.*;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static utils.FileHandler.readFile;
+import static ch.heigvd.prsv.utils.FileHandler.readFile;
 
 /*
 Ce test doit être lancé dans la commande build !!!
