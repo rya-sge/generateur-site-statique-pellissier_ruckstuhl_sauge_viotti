@@ -1,11 +1,11 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Groupe : PRSV
 Description : Implémentation cmd Clean
  */
 
 import picocli.CommandLine;
-import utils.FileHandler;
+import ch.heigvd.prsv.utils.FileHandler;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
         name = "clean",
         description = "nettoie le site statique"
 )
-
+public
 class Clean implements Callable<Integer> {
 
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root du site à effacer")

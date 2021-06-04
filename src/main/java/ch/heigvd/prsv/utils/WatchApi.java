@@ -1,4 +1,4 @@
-/*
+package ch.heigvd.prsv.utils;/*
 Date : 03.06.2021
 Groupe : PRSV
 Description : Watch Api pour le serveur http
@@ -7,6 +7,7 @@ Sources :
 Le code utilisé provient de la documentation officielle d'Oracle :
 https://docs.oracle.com/javase/tutorial/essential/io/notification.html
  */
+import ch.heigvd.prsv.Build;
 import picocli.CommandLine;
 
 import java.io.IOException;

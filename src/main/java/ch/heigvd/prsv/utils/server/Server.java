@@ -1,4 +1,4 @@
-package utils.server;/*
+package ch.heigvd.prsv.utils.server;/*
 Date : 23.04.2021
 Modifié: 30.04.2021
 Groupe : PRSV

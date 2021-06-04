@@ -4,7 +4,7 @@ Groupe : PRSV
 Description : Class permettant d'obtenir la version du projet.
  */
 
-package utils;
+package ch.heigvd.prsv.utils;
 
 import picocli.CommandLine.IVersionProvider;
 

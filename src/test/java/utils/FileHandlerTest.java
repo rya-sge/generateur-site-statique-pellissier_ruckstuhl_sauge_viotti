@@ -1,6 +1,8 @@
 package utils;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import ch.heigvd.prsv.utils.FileHandler;
 import global.ConstantesTest;
 
 class FileHandlerTest {

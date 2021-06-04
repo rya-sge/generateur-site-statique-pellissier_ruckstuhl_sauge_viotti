@@ -1,5 +1,6 @@
 package utils;
 
+import ch.heigvd.prsv.utils.JSONConfig;
 import global.ConstantesTest;
 
 import static org.junit.jupiter.api.Assertions.*;

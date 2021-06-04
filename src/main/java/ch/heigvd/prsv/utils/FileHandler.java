@@ -4,7 +4,7 @@ Groupe : PRSV
 Description : class de traitements de fichiers
  */
 
-package utils;
+package ch.heigvd.prsv.utils;
 import java.io.*;
 
 public class FileHandler {

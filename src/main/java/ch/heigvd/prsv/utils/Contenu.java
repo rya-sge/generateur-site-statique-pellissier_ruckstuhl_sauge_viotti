@@ -3,7 +3,7 @@ Date : 14.03.2021
 Groupe : PRSV
 Description : Représente le contenu d'une page sur le site
  */
-package utils;
+package ch.heigvd.prsv.utils;
 
 import java.util.Iterator;
 import java.util.LinkedList;

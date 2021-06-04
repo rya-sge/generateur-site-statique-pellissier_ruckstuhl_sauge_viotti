@@ -11,7 +11,7 @@ transforme en html dans le répertoire de destination.
  *
  */
 
-package utils;
+package ch.heigvd.prsv.utils;
 
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;

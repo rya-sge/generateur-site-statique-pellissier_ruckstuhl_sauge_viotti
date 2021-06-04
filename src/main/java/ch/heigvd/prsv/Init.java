@@ -1,13 +1,13 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Groupe : PRSV
 Description : Implémentation cmd Init
  */
 
 import picocli.CommandLine;
-import utils.Contenu;
-import utils.FileHandler;
-import utils.JSONConfig;
+import ch.heigvd.prsv.utils.Contenu;
+import ch.heigvd.prsv.utils.FileHandler;
+import ch.heigvd.prsv.utils.JSONConfig;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -18,7 +18,7 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 
-import static utils.FileHandler.exists;
+import static ch.heigvd.prsv.utils.FileHandler.exists;
 
 @CommandLine.Command(name = "init", description = "Initialiser un site static")
 public class Init implements Callable<Integer> {

@@ -4,7 +4,7 @@ Groupe : PRSV
 Description : class pour le fichier de configuration json
  */
 
-package utils;
+package ch.heigvd.prsv.utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

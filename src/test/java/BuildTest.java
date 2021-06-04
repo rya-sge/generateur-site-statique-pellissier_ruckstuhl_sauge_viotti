@@ -4,12 +4,14 @@ Groupe : PRSV
 Description : Test cmd Build
  */
 
+import ch.heigvd.prsv.Build;
+import ch.heigvd.prsv.Init;
 import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import utils.Contenu;
-import utils.FileHandler;
+import ch.heigvd.prsv.utils.Contenu;
+import ch.heigvd.prsv.utils.FileHandler;
 import utils.HandlerbarTest;
 
 import java.io.ByteArrayInputStream;
@@ -23,7 +25,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BuildTest {
@@ -72,10 +74,6 @@ public class BuildTest {
         listFiles.add(new File(dir + "/build/content/page.html"));
         listFiles.add(new File(dir + "/build/content/image.png"));
         listFiles.add(new File(dir + "/build/index.html"));
-
-
-
-
 
         for (File f : listFiles) {
             f.createNewFile();
@@ -146,6 +144,7 @@ public class BuildTest {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            fail();
         }
 
         FileHandler.create(dir2 + "/content/test.md",  page.toString());
@@ -167,6 +166,7 @@ public class BuildTest {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            fail();
         }
 
         //Mettre fin à la watchApi

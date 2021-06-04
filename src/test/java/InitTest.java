@@ -4,20 +4,22 @@ Groupe : PRSV
 Description : Test cmd Init
 */
 
+import ch.heigvd.prsv.Constantes;
+import ch.heigvd.prsv.Init;
 import global.ConstantesTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import picocli.CommandLine;
-import utils.JSONConfig;
+import ch.heigvd.prsv.utils.JSONConfig;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.FileHandler.eraseNotEmptyDirectory;
-import static utils.FileHandler.readFile;
+import static ch.heigvd.prsv.utils.FileHandler.eraseNotEmptyDirectory;
+import static ch.heigvd.prsv.utils.FileHandler.readFile;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InitTest {

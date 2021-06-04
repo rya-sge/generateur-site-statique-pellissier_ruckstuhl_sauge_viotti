@@ -4,14 +4,14 @@ Groupe : PRSV
 Description : Vérifie les valeurs de retour de Clean,java
  */
 
+import ch.heigvd.prsv.Clean;
 import global.ConstantesTest;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import utils.FileHandler;
+import ch.heigvd.prsv.utils.FileHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
