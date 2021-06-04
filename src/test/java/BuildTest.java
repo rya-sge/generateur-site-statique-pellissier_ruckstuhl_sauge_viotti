@@ -157,10 +157,10 @@ public class BuildTest {
             e.printStackTrace();
         }
 
-        //Retsster
+        //Création du fichier
+        //Il faut vérifier "à la main" que la commande build a fonctionné
+        //Car Avec des assert, ceux-ci étaient réalisés avant la fermeture du fichier et ne fonctionnaient pas
         FileHandler.create(dir2 + "/content/test2.md",  page.toString());
-        //File fileWatchHtml = new File(testFilesPath + "BuildTest/BuildTest2/build/content/test.html");
-        //Mettre fin à la watchApi
 
         try{
             //En attend pour être sûr que le build a pu se faire
@@ -168,8 +168,9 @@ public class BuildTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //Mettre fin à la watchApi
         t.interrupt();
-       // assertEquals(true, fileWatchHtml.exists());
 
     }
 }
