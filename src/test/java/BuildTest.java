@@ -13,7 +13,6 @@ import picocli.CommandLine;
 import ch.heigvd.prsv.utils.Contenu;
 import ch.heigvd.prsv.utils.FileHandler;
 import utils.HandlerbarTest;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -139,7 +138,7 @@ public class BuildTest {
         c.add("![Une image](./image.png)");
         Contenu page = new Contenu(titre, "", date, c);
 
-        try{
+        try {
             //En attend pour être sûr que le build a pu se faire
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -147,9 +146,9 @@ public class BuildTest {
             fail();
         }
 
-        FileHandler.create(dir2 + "/content/test.md",  page.toString());
+        FileHandler.create(dir2 + "/content/test.md", page.toString());
 
-        try{
+        try {
             //En attend pour être sûr que le build a pu se faire
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -159,9 +158,9 @@ public class BuildTest {
         //Création du fichier
         //Il faut vérifier "à la main" que la commande build a fonctionné
         //Car Avec des assert, ceux-ci étaient réalisés avant la fermeture du fichier et ne fonctionnaient pas
-        FileHandler.create(dir2 + "/content/test2.md",  page.toString());
+        FileHandler.create(dir2 + "/content/test2.md", page.toString());
 
-        try{
+        try {
             //En attend pour être sûr que le build a pu se faire
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -171,6 +170,5 @@ public class BuildTest {
 
         //Mettre fin à la watchApi
         t.interrupt();
-
     }
 }
