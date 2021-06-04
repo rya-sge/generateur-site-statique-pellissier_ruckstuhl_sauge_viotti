@@ -1,11 +1,11 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Groupe : PRSV
  */
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
-import utils.Version;
+import ch.heigvd.prsv.utils.Version;
 
 @CommandLine.Command(
         name="statique",

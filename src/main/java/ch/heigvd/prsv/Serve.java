@@ -1,4 +1,4 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Modifié: 30.04.2021
 Groupe : PRSV
@@ -6,8 +6,8 @@ Description : Implémentation cmd Serve. Le server se lance sur le port 8282
  */
 
 import picocli.CommandLine;
-import utils.FileHandler;
-import utils.server.Server;
+import ch.heigvd.prsv.utils.FileHandler;
+import ch.heigvd.prsv.utils.server.Server;
 
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
         name = "serve",
         description = "serve cmd"
 )
-
+public
 class Serve implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "<rootDirectory>")
     private String rootDirectory;

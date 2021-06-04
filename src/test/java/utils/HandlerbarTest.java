@@ -1,5 +1,6 @@
-package ch.heigvd.prsv.utils;
+package utils;
 
+import ch.heigvd.prsv.utils.HandlebarUtil;
 import global.ConstantesTest;
 import java.io.*;
 import java.nio.charset.StandardCharsets;

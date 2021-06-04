@@ -1,10 +1,11 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Groupe : PRSV
 Description : Implémentation cmd Build
  */
 
 
+import ch.heigvd.prsv.utils.WatchApi;
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
@@ -21,8 +22,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
-import utils.HandlebarUtil;
-import utils.JSONConfig;
+import ch.heigvd.prsv.utils.HandlebarUtil;
+import ch.heigvd.prsv.utils.JSONConfig;
 
 @CommandLine.Command(
         name = "build",

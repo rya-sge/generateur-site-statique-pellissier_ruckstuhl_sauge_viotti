@@ -1,5 +1,7 @@
-package ch.heigvd.prsv.utils;
+package utils;
 
+import ch.heigvd.prsv.utils.FileHandler;
+import ch.heigvd.prsv.utils.MdToHtml;
 import global.ConstantesTest;
 import org.junit.jupiter.api.Test;
 import org.tautua.markdownpapers.parser.ParseException;

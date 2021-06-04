@@ -1,4 +1,4 @@
-/*
+package ch.heigvd.prsv;/*
 Date : 05.03.2021
 Groupe : PRSV
 Description : Implémentation cmd New
