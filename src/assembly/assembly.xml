@@ -50,11 +50,5 @@
                 <exclude>${project.groupId}:${project.artifactId}:jar:*</exclude>
             </excludes>
         </dependencySet>
-        <dependencySet>
-            <outputDirectory>target/site/apidocs</outputDirectory>
-            <excludes>
-                <exclude>${project.groupId}:${project.artifactId}:jar:*</exclude>
-            </excludes>
-        </dependencySet>
     </dependencySets>
 </assembly>
