@@ -8,13 +8,19 @@ import global.ConstantesTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+import utils.Contenu;
+import utils.FileHandler;
 import utils.HandlerbarTest;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,6 +73,10 @@ public class BuildTest {
         listFiles.add(new File(dir + "/build/content/image.png"));
         listFiles.add(new File(dir + "/build/index.html"));
 
+
+
+
+
         for (File f : listFiles) {
             f.createNewFile();
         }
@@ -110,6 +120,57 @@ public class BuildTest {
         if (dir2.exists()) {
             //    FileUtils.forceDelete(dir2);
         }
+
+
+        Thread t = new Thread() {
+            public void run() {
+                new CommandLine(b).execute(dir2.toString(), "--watch");
+            }
+        };
+        t.start();
+
+
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        String titre = "Mon premier article";
+        String date = format.format(calendar.getTime());
+        LinkedList<String> c = new LinkedList<String>();
+        c.add("\n# Mon titre #\n");
+        c.add("## Mon sous-titre ##\n");
+        c.add("Le contenu de mon article.");
+        c.add("![Une image](./image.png)");
+        Contenu page = new Contenu(titre, "", date, c);
+
+        try{
+            //En attend pour être sûr que le build a pu se faire
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        FileHandler.create(dir2 + "/content/test.md",  page.toString());
+
+        try{
+            //En attend pour être sûr que le build a pu se faire
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //Création du fichier
+        //Il faut vérifier "à la main" que la commande build a fonctionné
+        //Car Avec des assert, ceux-ci étaient réalisés avant la fermeture du fichier et ne fonctionnaient pas
+        FileHandler.create(dir2 + "/content/test2.md",  page.toString());
+
+        try{
+            //En attend pour être sûr que le build a pu se faire
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //Mettre fin à la watchApi
+        t.interrupt();
 
     }
 }

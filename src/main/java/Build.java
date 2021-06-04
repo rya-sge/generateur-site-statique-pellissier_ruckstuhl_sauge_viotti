@@ -4,6 +4,7 @@ Groupe : PRSV
 Description : Implémentation cmd Build
  */
 
+
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;
 import picocli.CommandLine;
@@ -30,6 +31,8 @@ import utils.JSONConfig;
 public class Build implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
     private String rootDirectory;
+    @CommandLine.Option(names = "--watch", description = "Regarder en continu si des modifications sont effectuées")
+    boolean isWatch;
 
     @Override
     public Integer call() throws IOException, ParseException {
@@ -73,7 +76,7 @@ public class Build implements Callable<Integer> {
             for (File f : result) {
                 String filename = f.getName();
                 int index = filename.lastIndexOf('.');
-                if (index > 0) {
+                if (index > 0 && f.exists()) {
                     String extension = filename.substring(index + 1);
                     if (extension.equals("md")) //Si le fichier est sous format md, il est convertit en html
                     {
@@ -122,7 +125,10 @@ public class Build implements Callable<Integer> {
                             out.close();
 
                             f.delete();
-
+                            if(isWatch){
+                                WatchApi w = new WatchApi(rootDirectory);
+                                w.watch();
+                            }
                         } else {
                             throw new IllegalArgumentException("La 1ère ligne doit être le titre");
                         }

@@ -21,9 +21,10 @@ import java.util.concurrent.Callable;
 )
 
 class Serve implements Callable<Integer> {
-
     @CommandLine.Parameters(paramLabel = "<rootDirectory>")
     private String rootDirectory;
+    @CommandLine.Option(names = "--watch", description = "Regarder en continu si des modifications sont effectuées")
+    boolean isWatch;
 
     Scanner sc = new Scanner(System.in);
     String exit = new String();
@@ -46,7 +47,15 @@ class Serve implements Callable<Integer> {
                 // Lancer le serveur, seulement si un dossier build est trouvé dans le root donné.
                 if (file.isDirectory() && file.getName().equals("build")) {
                     try {
-
+                     Thread t = null;
+                      if(isWatch){
+                            t = new Thread() {
+                                public void run() {
+                                    new CommandLine(new Build()).execute(rootDirectory, "--watch");
+                                }
+                            };
+                            t.start();
+                        }
                         Server.run(rootDirectory + "/build", 8080);
 
                         // Garder le server ouvert tant que l'utilisateur ne tape pas exit
@@ -55,6 +64,9 @@ class Serve implements Callable<Integer> {
                             exit = sc.nextLine();
                             if (exit.equals("exit")){
                                 // Le processus a été terminé par l'utilisateur
+                                if(t != null){
+                                    t.interrupt();
+                                }
                                 return 0;
                             }
                         }
