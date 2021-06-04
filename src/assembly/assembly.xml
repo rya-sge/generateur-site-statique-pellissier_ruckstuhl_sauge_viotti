@@ -38,6 +38,10 @@
                 <include>LICENSE.md</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>target/site/apidocs</directory>
+            <outputDirectory>apidocs</outputDirectory>
+        </fileSet>
     </fileSets>
     <dependencySets>
         <dependencySet>
