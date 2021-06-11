@@ -1,4 +1,5 @@
-package ch.heigvd.prsv;/*
+package ch.heigvd.prsv;
+/*
 Date : 05.03.2021
 Modifié: 30.04.2021
 Groupe : PRSV
@@ -17,7 +18,8 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         name = "serve",
-        description = "serve cmd"
+        description = "Lance un serveur HTTP pour servir le site statique",
+        mixinStandardHelpOptions = true
 )
 public
 class Serve implements Callable<Integer> {
@@ -26,8 +28,11 @@ class Serve implements Callable<Integer> {
     @CommandLine.Option(names = "--watch", description = "Regarder en continu si des modifications sont effectuées")
     boolean isWatch;
 
+    @CommandLine.Option(names = { "-p", "--port"} , description = "Définir le port d'écoute du serveur. Par défaut 8080", defaultValue = "8080")
+    private int port;
+
     Scanner sc = new Scanner(System.in);
-    String exit = new String();
+    String exit;
 
     @Override
     public Integer call() {
@@ -56,7 +61,7 @@ class Serve implements Callable<Integer> {
                             };
                             t.start();
                         }
-                        Server.run(rootDirectory + "/build", 8080);
+                        Server.run(rootDirectory + "/build", port);
 
                         // Garder le server ouvert tant que l'utilisateur ne tape pas exit
                         while (true) {

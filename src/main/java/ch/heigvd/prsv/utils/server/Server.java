@@ -1,4 +1,5 @@
-package ch.heigvd.prsv.utils.server;/*
+package ch.heigvd.prsv.utils.server;
+/*
 Date : 23.04.2021
 Modifié: 30.04.2021
 Groupe : PRSV
@@ -23,5 +24,6 @@ public class Server {
         httpServer.createContext("/", new StaticHandler(pathToRoot));
         httpServer.bind(new InetSocketAddress("localhost", port), 100);
         httpServer.start();
+        System.out.println("Le serveur a été démarré sur le port " + port);
     }
 }
