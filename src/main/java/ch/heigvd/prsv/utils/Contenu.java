@@ -15,9 +15,9 @@ public class Contenu {
     private LinkedList<String> contenu;
 
     /**
-     * @param titre
-     * @param auteur
-     * @param date
+     * @param titre le titre de l'article
+     * @param auteur l'auteur de l'article
+     * @param date la date de l'article
      * @param contenu chaque objet de la linkedList est une ligne
      */
     public Contenu(String titre, String auteur, String date, LinkedList<String> contenu) {
@@ -30,10 +30,7 @@ public class Contenu {
         }
         this.contenu = contenu;
     }
-
-    /**
-     * @return
-     */
+    
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

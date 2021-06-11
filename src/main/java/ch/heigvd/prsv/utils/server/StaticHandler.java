@@ -21,7 +21,7 @@ public class StaticHandler implements HttpHandler
     /**
      * Constructeur
      * @param pathToRoot chemin du dossier root
-     * @throws IOException
+     * @throws IOException si le dossier n'existe pas
      */
     public StaticHandler(String pathToRoot) throws IOException {
         this.pathToRoot = pathToRoot.endsWith("/") ? pathToRoot : pathToRoot + "/";

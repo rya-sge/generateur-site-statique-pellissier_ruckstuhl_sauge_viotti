@@ -25,17 +25,10 @@ public class Init implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "<rootDirectory>", description = "Dossier root")
     private String rootDirectory;
 
-    /**
-     * @return
-     */
     public String getIndex() {
         return index.toString();
     }
 
-    /**
-     *
-     * @return
-     */
     public String getPage() {
         return page.toString();
     }
@@ -43,8 +36,8 @@ public class Init implements Callable<Integer> {
     private Contenu index;
     private Contenu page;
 
-    //Booléean indiquant si un fichier existe ou pas
-    //Util pour les tests
+    // Booléen indiquant si un fichier existe ou pas
+    // Util pour les tests
     public boolean createIndex = false;
     public boolean createRootDirectory = false;
     public boolean createFileConfig = false;
@@ -101,9 +94,6 @@ public class Init implements Callable<Integer> {
         page = new Contenu(titre, "", date, c);
     }
 
-    /**
-     * @return
-     */
     @Override
     public Integer call() {
         //Init

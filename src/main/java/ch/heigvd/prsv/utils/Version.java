@@ -11,8 +11,8 @@ import picocli.CommandLine.IVersionProvider;
 public class Version implements IVersionProvider {
 
     /**
-     *
-     * @return
+     * Récupère la version de l'application dans les métadonnées
+     * @return le nom de l'application et sa version
      */
     public String[] getVersion(){
         String currentVersion = this.getClass().getPackage().getImplementationVersion();

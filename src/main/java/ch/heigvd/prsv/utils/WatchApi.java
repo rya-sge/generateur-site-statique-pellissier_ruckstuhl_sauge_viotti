@@ -44,7 +44,9 @@ public class WatchApi {
         }
 
         /**
-         * Register the given directory with the WatchService
+         * Enregistre le dossier donné avec le WatchService
+         * @param dir dossier à enregistrer
+         * @throws IOException si le dossier n'est pas valide
          */
         private void register(Path dir) throws IOException {
             WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
@@ -65,9 +67,8 @@ public class WatchApi {
 
         /**
          * Enregistrer le répertoire ainsi que les sous-répertoires avec le watch service
-         *
-         * @param start
-         * @throws IOException
+         * @param start dossier de départ
+         * @throws IOException si un dossier n'existe pas
          */
         private void registerAll(final Path start) throws IOException {
             // Enreigstrer les répertoires et sous-répertoires
@@ -90,7 +91,10 @@ public class WatchApi {
         }
 
         /**
-         * Creates a WatchService and registers the given directory
+         * Crée un WatchService et enregistre le dossier donné
+         * @param dir dossier à passer en paramètre
+         * @param recursive activer ou non la récursivité
+         * @throws IOException lorsqu'un dossier n'est pas valide
          */
         public WatchApiRegister(Path dir, boolean recursive) throws IOException {
             this.watcher = FileSystems.getDefault().newWatchService();
@@ -113,7 +117,8 @@ public class WatchApi {
         }
 
         /**
-         * Process all events for keys queued to the watcher
+         * Traite tous les événements passés dans la file
+         * @throws InterruptedException lorsque le thread est interrompu de manière inattendue
          */
         public void processEvents() throws InterruptedException {
             WatchKey key;
@@ -134,7 +139,7 @@ public class WatchApi {
     }
 
     /**
-     * @param rootDirectory
+     * @param rootDirectory dossier à observer
      */
     public WatchApi(String rootDirectory) {
         this.rootDirectory = rootDirectory;

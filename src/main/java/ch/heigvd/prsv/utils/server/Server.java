@@ -17,7 +17,7 @@ public class Server {
      * Démarre le serveur http sur le localhost
      * @param pathToRoot le chemin du dossier root du site web
      * @param port le numéro de port sur lequel le serveur écoute
-     * @throws IOException
+     * @throws IOException s'il y a un problème avec le démarrage du serveur ou le chemin passé en paramètre
      */
     public static void run(String pathToRoot, int port) throws IOException {
         HttpServer httpServer = HttpServer.create();

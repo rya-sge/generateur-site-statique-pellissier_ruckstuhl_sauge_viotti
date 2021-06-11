@@ -18,19 +18,13 @@ import java.io.File;
 public class BenchmarkRunner {
     static String dir = "./benchmark";
 
-    /**
-     * Changer selon le mode souhaité
-     */
-    @Benchmark @BenchmarkMode(Mode.AverageTime)
+    @Benchmark @BenchmarkMode(Mode.AverageTime) // Changer selon le mode souhaité
     public void init() {
         new CommandLine(new Build()).execute(dir.toString());
     }
 
-    /**
-     * Permet de lancer le benchmark de façon indépendante au reste de l'application
-     * @param args
-     * @throws Exception
-     */
+
+    //Permet de lancer le benchmark de façon indépendante au reste de l'application
     public static void main(String[] args) throws Exception {
         File dossier = new File(dir);
         FileHandler.eraseNotEmptyDirectory(dossier);

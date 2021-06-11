@@ -115,6 +115,7 @@ public class FileHandler {
     /**
      * Efface un dossier et son contenu.
      * @param directory le dossier à effacer.
+     * @return true si le dossier a pu être supprimé
      */
     public static boolean eraseNotEmptyDirectory(File directory){
         File[] lFiles = directory.listFiles();
