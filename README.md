@@ -58,9 +58,9 @@ Ajouter dans la variable d'environnement *PATH* le chemin vers *statique/bin/sta
 
 ## Installer à partir du code source
 
-Télécharger et dézipper le code source de la [dernière version](https://stackoverflow.com/questions/5816419/intellij-does-not-show-project-folders) du programme.
+Cloner le repo ou télécharger et dézipper le code source de la [dernière version](https://github.com/gen-classroom/projet-pellissier_ruckstuhl_sauge_viotti-prsv/releases/latest) du programme.
 
-Générez ensuite le package avec maven: `mvn package`
+Générez ensuite le package avec maven : `mvn package`
 
 Désarchivez le fichier *target/statique.zip* et suivez ensuite la [procédure normale](#Installation).
 
@@ -77,6 +77,8 @@ Le programme demandera alors à l'utilisateur les informations de config
 ### Ajouter une page
 
 Il suffit de créer un fichier Markdown (ayant l'extension *.md*) dans la racine ou un répertoire du site statique.
+
+Il est possible de modifier les templates en éditant les fichiers .html dans le dossier *template*
 
 ### Compiler le site
 
