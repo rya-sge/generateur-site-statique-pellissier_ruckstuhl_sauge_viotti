@@ -151,8 +151,12 @@ public class WatchApi {
                 new WatchApiRegister(dir, true).processEvents();
             }
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+        catch(InterruptedException e){
+            System.out.println("La WatchAPI s'est arrêtée avec succès");
+            Thread.currentThread().interrupt();
         }
     }
 }

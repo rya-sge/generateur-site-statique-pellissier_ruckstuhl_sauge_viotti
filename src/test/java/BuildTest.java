@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import ch.heigvd.prsv.utils.Contenu;
 import ch.heigvd.prsv.utils.FileHandler;
-import utils.HandlerbarTest;
+import utils.HandlebarTest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -93,7 +93,7 @@ public class BuildTest {
         }
 
         //Test handlebar
-        HandlerbarTest ht = new HandlerbarTest();
+        HandlebarTest ht = new HandlebarTest();
         ht.test();
 
         Build b = new Build();

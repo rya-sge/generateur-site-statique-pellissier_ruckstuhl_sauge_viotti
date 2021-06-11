@@ -156,9 +156,8 @@ public class StaticHandler implements HttpHandler
 
             if (!urls[i].toString().endsWith(".jar"))
                 continue;
-            try
+            try(JarInputStream jarStream = new JarInputStream(urls[i].openStream()))
             {
-                JarInputStream jarStream = new JarInputStream(urls[i].openStream());
                 while (true)
                 {
                     ZipEntry entry = jarStream.getNextEntry();
@@ -177,15 +176,13 @@ public class StaticHandler implements HttpHandler
                         continue;
                     resources.add(name);
                 }
-
-                jarStream.close();
             }
             catch (IOException e) { e.printStackTrace();}
         }
 
 
-        InputStream stream = context.getResourceAsStream(directory);
-        try
+
+        try(InputStream stream = context.getResourceAsStream(directory))
         {
             if (stream != null)
             {

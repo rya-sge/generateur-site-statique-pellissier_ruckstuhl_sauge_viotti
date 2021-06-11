@@ -2,6 +2,8 @@ package utils;
 
 import ch.heigvd.prsv.utils.HandlebarUtil;
 import global.ConstantesTest;
+import org.junit.Test;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -14,10 +16,10 @@ import static ch.heigvd.prsv.utils.FileHandler.readFile;
 Ce test doit être lancé dans la commande build !!!
 Car il lui faut une arborescence
  */
-public class HandlerbarTest {
+public class HandlebarTest {
     private final String testFilesPath = ConstantesTest.TEST_FOLDER + "BuildTest";
 
-    //@Test
+    //@Test // appelé par le test BuildTest
     public void test() throws IOException {
 
         //Création de la map
