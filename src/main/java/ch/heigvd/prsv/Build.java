@@ -125,10 +125,6 @@ public class Build implements Callable<Integer> {
                                     out.flush();
 
                                     f.delete();
-                                    if (isWatch) {
-                                        WatchApi w = new WatchApi(rootDirectory);
-                                        w.watch();
-                                    }
                                 } catch(Exception e){
                                     throw e;
                                 } finally {
@@ -145,6 +141,10 @@ public class Build implements Callable<Integer> {
                         f.delete();
                     }
                 }
+            }
+            if (isWatch) {
+                WatchApi w = new WatchApi(rootDirectory);
+                w.watch();
             }
         } catch (IOException e) {
             e.printStackTrace();
