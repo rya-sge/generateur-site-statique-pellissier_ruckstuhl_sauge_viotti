@@ -17,9 +17,10 @@ public class FileHandler {
     public static String readFile(String path) {
         StringBuilder content = new StringBuilder();
 
-        try{
+
+        try(FileReader reader = new FileReader(path)){
+
             // Lit le contenu du fichier
-            FileReader reader = new FileReader(path);
             while(true){
                 int charCode = reader.read();
 
@@ -29,8 +30,6 @@ public class FileHandler {
 
                 content.append((char)charCode);
             }
-
-            reader.close();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -48,10 +47,8 @@ public class FileHandler {
      * @return true si l'écriture s'est bien passée, sinon false
      */
     public static boolean write(String path, String data){
-        try {
-            FileWriter writer = new FileWriter(path);
+        try(FileWriter writer = new FileWriter(path)){
             writer.write(data);
-            writer.close();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
