@@ -6,7 +6,7 @@
 
     <groupId>ch.heigvd.prsv</groupId>
     <artifactId>statique</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
 
     <name>statique</name>
